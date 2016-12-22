@@ -27,16 +27,19 @@
 #'
 #' @examples
 #' E <- rnorm(100)
-#' X <- 2 * E + rnorm(100)
+#' X <- 4 + 2 * E + rnorm(100)
 #' Y <- 3 * (X)^2 + rnorm(100)
 #' KCI(Y, E, X)
+#' KCI(Y, X, E)
 #'
 KCI <- function(Y, E, X, width = 0, alpha = 0.01, unbiased = FALSE,
                         approx = TRUE, bootstrap = TRUE,
                         nRepBs = 500, lambda = 1E-3, thresh = 1E-5,
                         numEig = length(Y), verbose = FALSE){
 
-  #TODO check input argument types;
+  #TODO
+  # check input argument types;
+  # if is.null(X) perform unconditional test? --> just HSIC
 
   # sample size
   n <- length(Y) # what if Y is a matrix?
