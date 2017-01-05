@@ -32,6 +32,7 @@
 #' KCI(Y, E, X)
 #' KCI(Y, X, E)
 #'
+#' @export
 KCI <- function(Y, E, X, width = 0, alpha = 0.01, unbiased = FALSE,
                         approx = TRUE, bootstrap = TRUE,
                         nRepBs = 500, lambda = 1E-3, thresh = 1E-5,
