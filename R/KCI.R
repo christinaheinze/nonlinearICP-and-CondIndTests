@@ -35,6 +35,7 @@
 #' @export
 KCI <- function(Y, E, X, width = 0, alpha = 0.01, unbiased = FALSE,
                         approx = TRUE, bootstrap = TRUE,
+                        isEcategorical = FALSE,
                         nRepBs = 500, lambda = 1E-3, thresh = 1E-5,
                         numEig = length(Y), verbose = FALSE){
 
@@ -47,7 +48,6 @@ KCI <- function(Y, E, X, width = 0, alpha = 0.01, unbiased = FALSE,
 
   # normalize the data
   Y <- scale(Y)
-  E <- scale(E)
   XPrime <- scale(X)
 
   if(any(is.na(XPrime))){
@@ -82,12 +82,18 @@ KCI <- function(Y, E, X, width = 0, alpha = 0.01, unbiased = FALSE,
   # KYX <- H %*% KYX %*% H
   KYX <- crossprod(H, KYX) %*% H
 
-  # delta kernel for discrete variable E
-  KE <- rbfKernel1(E, c(kernPrecision,1))$kx
-  # centralized kernel matrix
-  # KE <- H %*% KE %*% H
+  if(isEcategorical){
+    show(E)
+    # delta kernel for discrete variable E
+    KE <- (E^2 == (E %*% t(E))) %*% diag(n)
+  } else {
+    E <- scale(E)
+    KE <- rbfKernel1(E, c(kernPrecision,1))$kx
+    # centralized kernel matrix
+    # KE <- H %*% KE %*% H
+  }
   KE <- crossprod(H, KE) %*% H
-
+  
   # kernel for conditioning set X
   KX <- rbfKernel1(X, c(kernPrecision,1))$kx
   # centralized kernel matrix
