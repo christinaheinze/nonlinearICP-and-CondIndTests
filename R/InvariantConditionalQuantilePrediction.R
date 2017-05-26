@@ -1,0 +1,77 @@
+#' Invariant conditional quantile prediction.
+#'
+#' @description Tests the null hypothesis that Y and E are independent given X.
+#'
+#' @param Y An n-dimensional vector.
+#' @param E An n-dimensional vector. If \code{test = fishersTestExceedance}, E needs
+#' to be a factor.
+#' @param X A matrix or dataframe with n rows and p columns.
+#' @param alpha Significance level. Defaults to 0.05.
+#' @param verbose If \code{TRUE}, intermediate output is provided. Defaults to \code{FALSE}.
+#' @param test Unconditional independence test that tests whether exceedence is
+#' independent of E. Defaults to \code{fishersTestExceedance}.
+#' @param mtry Random forest parameter: Number of variables randomly sampled as
+#' candidates at each split.
+#' @param ntree Random forest parameter: Number of trees to grow.
+#' @param nodesize Random forest parameter: Minimum size of terminal nodes.
+#' @param quantiles Quantiles for which to test independence between exceedence and E.
+#' @param nSeqTests Bonferroni adjustment factor if previous tests where performed
+#' (e.g. with subsamples).
+#' @param returnModel If \code{TRUE}, the fitted quantile regression forest model
+#' will be returned.
+#'
+#' @return A list with the following entries:
+#' \itemize{
+#'  \item \code{pValue} The p value for the null hypothesis that Y and E are independent given X.
+#'  \item \code{model} The fitted quantile regression forest model if \code{returnModel = TRUE}.
+#'  }
+#'
+#' @examples
+#' n <- 1000
+#' E <- rbinom(n, size = 1, prob = 0.2)
+#' X <- 4 + 2 * E + rnorm(n)
+#' Y <- 3 * (X)^2 + rnorm(n)
+#' InvariantConditionalQuantilePrediction(Y, as.factor(E), X)
+#'
+#' E <- rbinom(n, size = 1, prob = 0.2)
+#' X <- 4 + 2 * E + rnorm(n)
+#' Y <- 3 * E + rnorm(n)
+#' InvariantConditionalQuantilePrediction(Y, as.factor(E), X)
+#'
+InvariantConditionalQuantilePrediction <- function(Y, E, X,
+                                                  alpha = 0.05,
+                                                  verbose = FALSE,
+                                                  test = fishersTestExceedance,
+                                                  isEcategorical = TRUE,
+                                                  mtry = sqrt(NCOL(X)),
+                                                  ntree = 100,
+                                                  nodesize = max(nrow(X)/1000, 5),
+                                                  quantiles = c(0.1, 0.5, 0.9),
+                                                  nSeqTests = 1,
+                                                  returnModel = FALSE){
+
+  n <- nrow(X)
+  p <- ncol(X)
+
+  # train model Y ~ X using all data
+  mat <- as.matrix(X)
+  colnames(mat) <- paste("V", 1:ncol(mat), sep = "")
+  rfResult <- quantregForest(x = mat,
+                             y = Y,
+                             mtry = mtry,
+                             ntree = ntree,
+                             nodesize = nodesize)
+
+  # predict
+  predicted <- predict(rfResult, newdata = mat, what = quantiles)
+
+  # test whether residual distribution is identical in all environments E
+  result <- test(Y, predicted, E, n, p, alpha, nSeqTests, verbose)
+
+  if(returnModel){
+    result$model <- list(rfResult = rfResult)
+  }
+
+  result
+}
+

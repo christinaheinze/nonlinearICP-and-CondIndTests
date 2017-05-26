@@ -1,10 +1,25 @@
-Package: KCI
+Package: CondIndTests
 Type: Package
-Title: What the Package Does (Title Case)
-Version: 0.1.0
-Author: Who wrote it
-Maintainer: Who to complain to <yourfault@somewhere.net>
-Description: More about what it does (maybe more than one line)
-License: What license is it under?
+Title: Nonlinear Conditional Independence Tests
+Version: 0.1
+Date: 2017-05-26
+Author: Christina Heinze-Deml <heinzedeml@stat.math.ethz.ch>, Jonas Peters <jonas.peters@math.ku.dk>
+Depends:
+    R (>= 3.1.0)
+Maintainer: Christina Heinze-Deml <heinzedeml@stat.math.ethz.ch>
+Description: Code for a variety of nonlinear conditional independence tests: 
+  Kernel conditional independence test (Zhang et al., 2011),
+  Residual Prediction test (based on Shah und Buehlmann, 2015),
+  Invariant environment prediction,
+  Invariant target prediction,
+  Invariant residual distribution test,
+  Invariant conditional quantile prediction (all from <add ref>).
+License: GPL
 LazyData: TRUE
-RoxygenNote: 5.0.1
+Imports:
+    randomForest,
+    quantregForest,
+    lawstat,
+    RPtests,
+    caTools
+RoxygenNote: 6.0.1

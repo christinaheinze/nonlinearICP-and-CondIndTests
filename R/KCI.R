@@ -10,6 +10,7 @@
 #' @param unbiased
 #' @param approx
 #' @param bootstrap
+#' @param isEcategorical
 #' @param nRepBs
 #' @param lambda
 #' @param thresh
@@ -26,18 +27,25 @@
 #'  }
 #'
 #' @examples
-#' E <- rnorm(100)
-#' X <- 4 + 2 * E + rnorm(100)
-#' Y <- 3 * (X)^2 + rnorm(100)
+#' n <- 100
+#' E <- rnorm(n)
+#' X <- 4 + 2 * E + rnorm(n)
+#' Y <- 3 * (X)^2 + rnorm(n)
 #' KCI(Y, E, X)
 #' KCI(Y, X, E)
 #'
-#' @export
-KCI <- function(Y, E, X, width = 0, alpha = 0.01, unbiased = FALSE,
-                        approx = TRUE, bootstrap = TRUE,
-                        isEcategorical = FALSE,
-                        nRepBs = 500, lambda = 1E-3, thresh = 1E-5,
-                        numEig = length(Y), verbose = FALSE){
+KCI <- function(Y, E, X,
+                width = 0,
+                alpha = 0.05,
+                unbiased = FALSE,
+                approx = TRUE,
+                bootstrap = TRUE,
+                isEcategorical = FALSE,
+                nRepBs = 500,
+                lambda = 1E-3,
+                thresh = 1E-5,
+                numEig = length(Y),
+                verbose = FALSE){
 
   #TODO
   # check input argument types;
@@ -93,7 +101,7 @@ KCI <- function(Y, E, X, width = 0, alpha = 0.01, unbiased = FALSE,
     # KE <- H %*% KE %*% H
   }
   KE <- crossprod(H, KE) %*% H
-  
+
   # kernel for conditioning set X
   KX <- rbfKernel1(X, c(kernPrecision,1))$kx
   # centralized kernel matrix

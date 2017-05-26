@@ -4,9 +4,9 @@
 \alias{KCI}
 \title{Kernel conditional independence test.}
 \usage{
-KCI(Y, E, X, width = 0, alpha = 0.01, unbiased = FALSE, approx = TRUE,
-  bootstrap = TRUE, nRepBs = 500, lambda = 0.001, thresh = 1e-05,
-  numEig = length(Y), verbose = FALSE)
+KCI(Y, E, X, width = 0, alpha = 0.05, unbiased = FALSE, approx = TRUE,
+  bootstrap = TRUE, isEcategorical = FALSE, nRepBs = 500,
+  lambda = 0.001, thresh = 1e-05, numEig = length(Y), verbose = FALSE)
 }
 \arguments{
 \item{width}{Kernel width}
@@ -29,11 +29,11 @@ A list with the following entries:
 Tests the null hypothesis that Y and E are independent given X.
 }
 \examples{
-E <- rnorm(100)
-X <- 4 + 2 * E + rnorm(100)
-Y <- 3 * (X)^2 + rnorm(100)
+n <- 100
+E <- rnorm(n)
+X <- 4 + 2 * E + rnorm(n)
+Y <- 3 * (X)^2 + rnorm(n)
 KCI(Y, E, X)
 KCI(Y, X, E)
 
 }
-
