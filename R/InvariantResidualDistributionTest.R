@@ -64,8 +64,8 @@ InvariantResidualDistributionTest <- function(Y, E, X,
     stop("InvariantResidualDistributionTest can only be applied if E is univariate.")
   }
 
-  n <- nrow(X)
-  p <- ncol(X)
+  n <- NROW(X)
+  p <- NCOL(X)
 
   if(fitWithGam){
     res <- gamErrorDistributions(X, Y, colNameNoSmooth, returnModel)

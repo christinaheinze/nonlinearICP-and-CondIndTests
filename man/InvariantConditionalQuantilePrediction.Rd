@@ -7,7 +7,8 @@
 InvariantConditionalQuantilePrediction(Y, E, X, alpha = 0.05,
   verbose = FALSE, test = fishersTestExceedance, isEcategorical = TRUE,
   mtry = sqrt(NCOL(X)), ntree = 100, nodesize = max(nrow(X)/1000, 5),
-  quantiles = c(0.1, 0.5, 0.9), nSeqTests = 1, returnModel = FALSE)
+  maxnodes = NULL, quantiles = c(0.1, 0.5, 0.9), nSeqTests = 1,
+  returnModel = FALSE)
 }
 \arguments{
 \item{Y}{An n-dimensional vector.}
@@ -30,6 +31,9 @@ candidates at each split.}
 \item{ntree}{Random forest parameter: Number of trees to grow.}
 
 \item{nodesize}{Random forest parameter: Minimum size of terminal nodes.}
+
+\item{maxnodes}{Random forest parameter: Maximum number of terminal nodes trees in the forest can have.
+Defaults to NULL.}
 
 \item{quantiles}{Quantiles for which to test independence between exceedence and E.}
 

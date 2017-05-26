@@ -14,6 +14,8 @@
 #' candidates at each split.
 #' @param ntree Random forest parameter: Number of trees to grow.
 #' @param nodesize Random forest parameter: Minimum size of terminal nodes.
+#' @param maxnodes Random forest parameter: Maximum number of terminal nodes trees in the forest can have.
+#' Defaults to NULL.
 #' @param quantiles Quantiles for which to test independence between exceedence and E.
 #' @param nSeqTests Bonferroni adjustment factor if previous tests where performed
 #' (e.g. with subsamples).
@@ -46,12 +48,13 @@ InvariantConditionalQuantilePrediction <- function(Y, E, X,
                                                   mtry = sqrt(NCOL(X)),
                                                   ntree = 100,
                                                   nodesize = max(nrow(X)/1000, 5),
+                                                  maxnodes = NULL,
                                                   quantiles = c(0.1, 0.5, 0.9),
                                                   nSeqTests = 1,
                                                   returnModel = FALSE){
 
-  n <- nrow(X)
-  p <- ncol(X)
+  n <- NROW(X)
+  p <- NCOL(X)
 
   # train model Y ~ X using all data
   mat <- as.matrix(X)
@@ -60,7 +63,8 @@ InvariantConditionalQuantilePrediction <- function(Y, E, X,
                              y = Y,
                              mtry = mtry,
                              ntree = ntree,
-                             nodesize = nodesize)
+                             nodesize = nodesize,
+                             maxnodes = maxnodes)
 
   # predict
   predicted <- predict(rfResult, newdata = mat, what = quantiles)
