@@ -24,5 +24,6 @@ Imports:
     RPtests,
     caTools,
     mgcv,
-    MASS
+    MASS,
+    kernlab
 RoxygenNote: 6.0.1

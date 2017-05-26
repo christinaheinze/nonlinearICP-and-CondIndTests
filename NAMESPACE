@@ -1,11 +1,10 @@
-import(randomForest, quantregForest)
+import(randomForest, quantregForest, kernlab)
 importFrom("caTools", sample.split)
 importFrom("lawstat", levene.test)
 importFrom("RPtests", RPtest)
-
 importFrom("methods", "show")
 importFrom("stats", "as.formula", "dist", "fisher.test", "ks.test",
-             "lm", "median", "pf", "pgamma", "predict", "prop.test",
+             "lm", "median", "pf", "pgamma", "prop.test",
              "qgamma", "rchisq", "residuals", "rnorm", "sd",
              "wilcox.test", "xtabs")
 
@@ -14,3 +13,4 @@ export(InvariantConditionalQuantilePrediction, fishersTestExceedance)
 export(InvariantResidualDistributionTest, leveneAndWilcoxResidualDistributions, ksResidualDistributions)
 export(InvariantTargetPrediction, fTestTargetY, wilcoxTestTargetY)
 export(InvariantEnvironmentPrediction, propTestTargetE)
+export(ResidualPredictionTest)
