@@ -11,7 +11,7 @@ rfResidualDistributions <- function(X, Y,
   # train model Y ~ X using all data
   rfResult <- randomForest(x = as.matrix(X),
                            y = Y,
-                           mtry = useMtry,
+                           mtry = mtry,
                            ntree = ntree,
                            nodesize = nodesize,
                            maxnodes = maxnodes)

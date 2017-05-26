@@ -1,8 +1,13 @@
 import(randomForest, quantregForest)
 importFrom("caTools", sample.split)
-importFrom("sfsmisc", wrapFormula)
 importFrom("lawstat", levene.test)
 importFrom("RPtests", RPtest)
+
+importFrom("methods", "show")
+importFrom("stats", "as.formula", "dist", "fisher.test", "ks.test",
+             "lm", "median", "pf", "pgamma", "predict", "prop.test",
+             "qgamma", "rchisq", "residuals", "rnorm", "sd",
+             "wilcox.test", "xtabs")
 
 export(KCI)
 export(InvariantConditionalQuantilePrediction, fishersTestExceedance)

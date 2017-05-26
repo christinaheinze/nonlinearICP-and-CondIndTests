@@ -18,7 +18,7 @@ KCI(Y, E, X, width = 0, alpha = 0.05, unbiased = FALSE, approx = TRUE,
 \value{
 A list with the following entries:
 \itemize{
- \item \code{testStatistic} the statistic Tr(K_{\ddot{X}|Z} * K_{Y|Z})
+ \item \code{testStatistic} the statistic Tr(K_{(ddot{(X)}|Z)} * K_{(Y|Z)})
  \item \code{criticalValue} the critical point at the p-value equal to alpha obtained by bootstrapping.
  \item \code{pValue} the p value obtained by bootstrapping.
  \item \code{criticalValueApprox} the critical value obtained by Gamma approximation.

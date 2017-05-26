@@ -17,9 +17,12 @@ Description: Code for a variety of nonlinear conditional independence tests:
 License: GPL
 LazyData: TRUE
 Imports:
+    methods,
     randomForest,
     quantregForest,
     lawstat,
     RPtests,
-    caTools
+    caTools,
+    mgcv,
+    MASS
 RoxygenNote: 6.0.1

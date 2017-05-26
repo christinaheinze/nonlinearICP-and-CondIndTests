@@ -5,7 +5,7 @@
 \title{Invariant residual distribution test.}
 \usage{
 InvariantResidualDistributionTest(Y, E, X, alpha = 0.05, verbose = FALSE,
-  fitWithGam = TRUE, test = leveneAndWilcoxResidDistributions,
+  fitWithGam = TRUE, test = leveneAndWilcoxResidualDistributions,
   colNameNoSmooth = NULL, mtry = sqrt(NCOL(X)), ntree = 500,
   nodesize = 5, maxnodes = NULL, nSeqTests = 1, returnModel = FALSE)
 }
@@ -60,10 +60,10 @@ E <- rbinom(n, size = 1, prob = 0.2)
 X <- 4 + 2 * E + rnorm(n)
 Y <- 3 * (X)^2 + rnorm(n)
 InvariantResidualDistributionTest(Y, as.factor(E), X)
-InvariantResidualDistributionTest(Y, as.factor(E), X, test = ksErrorDistributions)
+InvariantResidualDistributionTest(Y, as.factor(E), X, test = ksResidualDistributions)
 E <- rbinom(n, size = 1, prob = 0.2)
 X <- 4 + 2 * E + rnorm(n)
 Y <- 3 * E + rnorm(n)
 InvariantResidualDistributionTest(Y, as.factor(E), X)
-InvariantResidualDistributionTest(Y, as.factor(E), X, test = ksErrorDistributions)
+InvariantResidualDistributionTest(Y, as.factor(E), X, test = ksResidualDistributions)
 }
