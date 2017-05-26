@@ -3,8 +3,7 @@
 #' @description Tests the null hypothesis that Y and E are independent given X.
 #'
 #' @param Y An n-dimensional vector.
-#' @param E An n-dimensional vector. If \code{test = fishersTestExceedance}, E needs
-#' to be a factor.
+#' @param E An n-dimensional vector or an nxq dimensional matrix or dataframe.
 #' @param X A matrix or dataframe with n rows and p columns.
 #' @param alpha Significance level. Defaults to 0.05.
 #' @param verbose If \code{TRUE}, intermediate output is provided. Defaults to \code{FALSE}.
@@ -100,13 +99,15 @@ InvariantTargetPrediction <-  function(Y, E, X,
   # test whether performance is statistically indistinguishable
   # dfs: larger model: p + env. var. + intercept
 
+  dimE <- NCOL(E)
+
   if(NCOL(X) == 1 & all(X == 1)){
-    df <- 2
+    df <- 1+dimE
   }else{
-    df <- p+2
+    df <- p+1+dimE
   }
 
-  result <- test(Y[testInd], res$predictedOnlyX, res$predictedXE, n, df, alpha, nSeqTests, verbose)
+  result <- test(Y[testInd], res$predictedOnlyX, res$predictedXE, n, df, alpha, nSeqTests, verbose, dimE)
 
   # reject if using X and E has significantly better accuracy than using X only
   if(verbose) cat(paste("\nMSE only X :", round(mean((Y[testInd] - res$predictedOnlyX)^2), 2),

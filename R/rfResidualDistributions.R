@@ -1,4 +1,4 @@
-rfErrorDistributions <- function(X, Y,
+rfResidualDistributions <- function(X, Y,
                                  mtry,
                                  ntree,
                                  nodesize,

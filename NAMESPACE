@@ -6,5 +6,6 @@ importFrom("RPtests", RPtest)
 
 export(KCI)
 export(InvariantConditionalQuantilePrediction, fishersTestExceedance)
-export(InvariantResidualDistributionTest, leveneAndWilcoxResidDistributions, ksErrorDistributions)
+export(InvariantResidualDistributionTest, leveneAndWilcoxResidualDistributions, ksResidualDistributions)
 export(InvariantTargetPrediction, fTestTargetY, wilcoxTestTargetY)
+export(InvariantEnvironmentPrediction, propTestTargetE)

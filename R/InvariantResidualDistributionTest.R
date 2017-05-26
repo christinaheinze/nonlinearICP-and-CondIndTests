@@ -35,19 +35,19 @@
 #' X <- 4 + 2 * E + rnorm(n)
 #' Y <- 3 * (X)^2 + rnorm(n)
 #' InvariantResidualDistributionTest(Y, as.factor(E), X)
-#' InvariantResidualDistributionTest(Y, as.factor(E), X, test = ksErrorDistributions)
+#' InvariantResidualDistributionTest(Y, as.factor(E), X, test = ksResidualDistributions)
 
 #' E <- rbinom(n, size = 1, prob = 0.2)
 #' X <- 4 + 2 * E + rnorm(n)
 #' Y <- 3 * E + rnorm(n)
 #' InvariantResidualDistributionTest(Y, as.factor(E), X)
-#' InvariantResidualDistributionTest(Y, as.factor(E), X, test = ksErrorDistributions)
+#' InvariantResidualDistributionTest(Y, as.factor(E), X, test = ksResidualDistributions)
 
 InvariantResidualDistributionTest <- function(Y, E, X,
                                               alpha = 0.05,
                                               verbose = FALSE,
                                               fitWithGam = TRUE,
-                                              test = leveneAndWilcoxResidDistributions,
+                                              test = leveneAndWilcoxResidualDistributions,
                                               colNameNoSmooth = NULL,
                                               mtry = sqrt(NCOL(X)),
                                               ntree = 500,
@@ -68,9 +68,9 @@ InvariantResidualDistributionTest <- function(Y, E, X,
   p <- NCOL(X)
 
   if(fitWithGam){
-    res <- gamErrorDistributions(X, Y, colNameNoSmooth, returnModel)
+    res <- gamResidualDistributions(X, Y, colNameNoSmooth, returnModel)
   }else{
-    res <- rfErrorDistributions(X, Y, mtry, ntree, nodesize, maxnodes, returnModel)
+    res <- rfResidualDistributions(X, Y, mtry, ntree, nodesize, maxnodes, returnModel)
   }
 
   # test whether residual distribution is identical in all environments E

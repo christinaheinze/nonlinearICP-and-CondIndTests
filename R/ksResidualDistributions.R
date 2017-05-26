@@ -1,4 +1,18 @@
-ksErrorDistributions <- function(Y, predicted, E, n, p, alpha, nSeqTests, verbose){
+#' KS test to compare residual distributions
+#'
+#' @description Tests whether ...
+#'
+#' @param Y
+#' @param predicted
+#' @param E
+#' @param n
+#' @param p
+#' @param alpha
+#' @param nSeqTests
+#' @param verbose
+#'
+#' @return A list with the p-value for the test.
+ksResidualDistributions <- function(Y, predicted, E, n, p, alpha, nSeqTests, verbose){
 
   uniqueE <- unique(E)
   numUniqueE <- length(uniqueE)

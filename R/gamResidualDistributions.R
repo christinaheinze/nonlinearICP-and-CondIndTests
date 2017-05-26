@@ -1,4 +1,4 @@
-gamErrorDistributions <- function(X, Y,
+gamResidualDistributions <- function(X, Y,
                                   colNameNoSmooth = NULL,
                                   returnModel = FALSE){
 

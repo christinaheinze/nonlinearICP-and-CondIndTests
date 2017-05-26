@@ -1,3 +1,18 @@
+#' Fishers test to compare two mean squared error rates.
+#'
+#' @description Tests whether ...
+#'
+#' @param Y
+#' @param predicted
+#' @param E
+#' @param n
+#' @param p
+#' @param alpha
+#' @param nSeqTests
+#' @param verbose
+#'
+#' @return A list with the p-value for the test.
+
 fishersTestExceedance <- function(Y, predicted, E, n, p, alpha, nSeqTests, verbose){
 
   if(!is.factor(E)){
