@@ -4,7 +4,7 @@
 \alias{propTestTargetE}
 \title{Proportion test to compare two misclassification rates.}
 \usage{
-propTestTargetE(E, predictedOnlyX, predictedXY, adjFactor, verbose)
+propTestTargetE(E, predictedOnlyX, predictedXY, verbose)
 }
 \arguments{
 \item{E}{An n-dimensional vector.}
@@ -12,8 +12,6 @@ propTestTargetE(E, predictedOnlyX, predictedXY, adjFactor, verbose)
 \item{predictedOnlyX}{Predictions for E based on predictors in X only.}
 
 \item{predictedXY}{Predictions for E based on predictors in X and Y.}
-
-\item{adjFactor}{Bonferroni adjustment factor for p-value if multiple tests were performed.}
 
 \item{verbose}{Set to \code{TRUE} if output should be printed.}
 }

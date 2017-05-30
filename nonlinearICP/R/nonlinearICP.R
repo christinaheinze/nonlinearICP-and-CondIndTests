@@ -79,64 +79,10 @@ nonlinearICP <- function(X, Y, environment,
                sep = ""))
 
   # retrieve number of observations and number of variables
-  n <- nrow(X)
-  p <- ncol(X)
+  n <- NROW(X)
+  p <- NCOL(X)
 
   if(is.null(colnames(X))) colnames(X) <- 1:p
-
-  # basis expansions
-  if(!is.null(condIndTestNames)){
-    if(condIndTestNames[1] == "scaledResiduals"){
-      if(verbose){
-        cat("\nScaledResiduals: creating design matrix...with ")
-      }
-
-      if(!is.null(argsCondIndTest$degree)){
-        q <- argsCondIndTest$degree
-      }else{
-        q <- 4
-      }
-
-      if(!is.null(argsCondIndTest$basis)){
-        if(is.element(argsCondIndTest$basis, c("polynomial"))){
-          if(verbose){
-            cat(argsCondIndTest$basis)
-          }
-          provided <- TRUE
-          XBasis <- matrix(nrow=n,ncol=p*q)
-
-          if(argsCondIndTest$basis == "polynomial"){
-            if(q == 1){
-              XBasis <- X
-              colnames(XBasis) <- colnames(X)
-            }else{
-              colX <- character(2*p)
-              cc <- 0
-              for (k in 1:p){
-                cc <- cc+1
-                XBasis[,cc] <- X[,k]
-                colX[cc] <- colnames(X)[k]
-                for (qc in 2:q){
-                  cc <- cc+1
-                  XBasis[,cc] <- X[,k]^qc
-                  colX[cc] <- paste(colnames(X)[k],"_",qc,sep="")
-                }
-              }
-              colnames(XBasis) <- colX
-            }
-            colXorig <- sapply(strsplit(colnames(XBasis),"_"),function(x)x[[1]])
-
-          }else{
-            stop("\nEstimation procedure for basis not supported.")
-          }
-
-
-        }else{
-          provided <- FALSE
-        }
-      }
-    }
-  }
 
   if(verbose) cat(paste("\n\n *** Using conditional independence test '",
 
@@ -197,7 +143,6 @@ nonlinearICP <- function(X, Y, environment,
 
   if(verbose) printoutat <- 2^(1:ceiling(log2(nSets)))
 
-
   # compute p-value
   while(cont && setCounter < nSets){
     if(verbose){
@@ -226,23 +171,6 @@ nonlinearICP <- function(X, Y, environment,
         designMat <- matrix(rep(1, nrow(X)), nrow = nrow(X), ncol = 1)
       }else{
         designMat <- X[, usevariab,drop=FALSE]
-
-        if(!is.null(condIndTestNames)){
-          if(condIndTestNames[1] == "scaledResiduals"){
-            if(exists("provided")){
-              if(provided){
-                colIdx <- which( colXorig %in% colnames(designMat) )
-                XB <- XBasis[,colIdx,drop=FALSE]
-                argsCondIndTest$XBasis <- XB
-                argsCondIndTest$basis <- "provided"
-              }
-            }else{
-              argsCondIndTest$XBasis <- NULL
-            }
-
-          }
-        }
-
       }
 
       pvalueAndDecision <- getPValueAndDecision(designMat,
@@ -252,7 +180,6 @@ nonlinearICP <- function(X, Y, environment,
                                                 alpha=alpha,
                                                 speedUp = speedUp,
                                                 subsampleSize = subsampleSize,
-                                                retrieveDefiningsSets = retrieveDefiningsSets,
                                                 verbose = verbose)
 
       pvalue <- pvalueAndDecision$pvalue
@@ -370,22 +297,6 @@ nonlinearICP <- function(X, Y, environment,
 
       designMat <- X[, testAdditionalSet,drop=FALSE]
 
-      if(!is.null(condIndTestNames)){
-        if(condIndTestNames[1] == "scaledResiduals"){
-          if(exists("provided")){
-            if(provided){
-              colIdx <- which( colXorig %in% colnames(designMat) )
-              XB <- XBasis[,colIdx,drop=FALSE]
-              argsCondIndTest$XBasis <- XB
-              argsCondIndTest$basis <- "provided"
-            }
-          }else{
-            argsCondIndTest$XBasis <- NULL
-          }
-
-        }
-      }
-
       pvalueAndDecision <- getPValueAndDecision(designMat,
                                                 Y, environment,
                                                 condIndTest = condIndTest,
@@ -393,7 +304,6 @@ nonlinearICP <- function(X, Y, environment,
                                                 alpha=alpha,
                                                 speedUp = speedUp,
                                                 subsampleSize = subsampleSize,
-                                                retrieveDefiningsSets = retrieveDefiningsSets,
                                                 verbose = verbose)
 
       pvalue <- pvalueAndDecision$pvalue

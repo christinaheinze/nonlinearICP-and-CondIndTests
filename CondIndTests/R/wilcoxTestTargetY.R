@@ -7,19 +7,18 @@
 #' @param Y An n-dimensional vector.
 #' @param predictedOnlyX Predictions for Y based on predictors in X only.
 #' @param predictedXE Predictions for Y based on predictors in X and E.
-#' @param adjFactor Bonferroni adjustment factor for p-value if multiple tests were performed.
 #' @param verbose Set to \code{TRUE} if output should be printed.
 #' @param ... Argument to allow for coherent interface of fTestTargetY and wilcoxTestTargetY.
 #'
 #' @return A list with the p-value for the test.
-wilcoxTestTargetY <- function(Y, predictedOnlyX, predictedXE, adjFactor, verbose, ...){
+wilcoxTestTargetY <- function(Y, predictedOnlyX, predictedXE, verbose, ...){
 
   residOnlyX <- abs(Y - predictedOnlyX)
   residXE <- abs(Y - predictedXE)
   diffResid <- residOnlyX-residXE
 
   testResult <- wilcox.test(diffResid, alternative="greater")
-  pvalue <- testResult$p.value*adjFactor
+  pvalue <- testResult$p.value
 
   if(verbose)
     cat(paste("\nTest statistc: ", testResult$statistic))

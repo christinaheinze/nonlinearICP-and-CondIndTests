@@ -7,7 +7,7 @@
 InvariantResidualDistributionTest(Y, E, X, alpha = 0.05, verbose = FALSE,
   fitWithGam = TRUE, test = leveneAndWilcoxResidualDistributions,
   colNameNoSmooth = NULL, mtry = sqrt(NCOL(X)), ntree = 500,
-  nodesize = 5, maxnodes = NULL, nSeqTests = 1, returnModel = FALSE)
+  nodesize = 5, maxnodes = NULL, returnModel = FALSE)
 }
 \arguments{
 \item{Y}{An n-dimensional vector.}
@@ -37,9 +37,6 @@ candidates at each split. Defaults to sqrt(NCOL(X)).}
 
 \item{maxnodes}{Random forest parameter: Maximum number of terminal nodes trees in the forest can have.
 Defaults to NULL.}
-
-\item{nSeqTests}{Bonferroni adjustment factor if previous tests where performed
-(e.g. with subsamples).}
 
 \item{returnModel}{If \code{TRUE}, the fitted quantile regression forest model
 will be returned.}

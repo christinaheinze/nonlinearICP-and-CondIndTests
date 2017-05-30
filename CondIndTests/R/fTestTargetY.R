@@ -7,14 +7,13 @@
 #' @param Y An n-dimensional vector.
 #' @param predictedOnlyX Predictions for Y based on predictors in X only.
 #' @param predictedXE Predictions for Y based on predictors in X and E.
-#' @param adjFactor Bonferroni adjustment factor for p-value if multiple tests were performed.
 #' @param verbose Set to \code{TRUE} if output should be printed.
 #' @param ... The dimensions of X (df) and E (dimE) need to be passed via the ...
 #' argument to allow for coherent interface of fTestTargetY and wilcoxTestTargetY.
 #'
 #' @return A list with the p-value for the test.
-fTestTargetY <- function(Y, predictedOnlyX, predictedXE, adjFactor, verbose, ...){
-  n <- NROW(n)
+fTestTargetY <- function(Y, predictedOnlyX, predictedXE, verbose, ...){
+  n <- NROW(Y)
   dots <- list(...)
   if(!is.null(dots$dimE)){
     dimE <- dots$dimE
@@ -32,7 +31,6 @@ fTestTargetY <- function(Y, predictedOnlyX, predictedXE, adjFactor, verbose, ...
     cat(paste("\nF-Statistc: ", fStatistic))
 
   pvalue <- pf(fStatistic, dimE, n-p, lower.tail = FALSE)
-  pvalue <- adjFactor*pvalue
 
   if(verbose)
     cat(paste("\np-value: ", pvalue))

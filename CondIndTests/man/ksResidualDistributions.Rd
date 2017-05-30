@@ -4,7 +4,7 @@
 \alias{ksResidualDistributions}
 \title{Kolmogorov-Smirnov test to compare residual distributions}
 \usage{
-ksResidualDistributions(Y, predicted, E, adjFactor, verbose)
+ksResidualDistributions(Y, predicted, E, verbose)
 }
 \arguments{
 \item{Y}{An n-dimensional vector.}
@@ -12,8 +12,6 @@ ksResidualDistributions(Y, predicted, E, adjFactor, verbose)
 \item{predicted}{An n-dimensional vector of predictions for Y.}
 
 \item{E}{An n-dimensional vector, defining the grouping.}
-
-\item{adjFactor}{Bonferroni adjustment factor for p-value if multiple tests were performed.}
 
 \item{verbose}{Set to \code{TRUE} if output should be printed.}
 }

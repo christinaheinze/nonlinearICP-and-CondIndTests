@@ -7,11 +7,10 @@
 #' @param Y An n-dimensional vector.
 #' @param predicted An n-dimensional vector of predictions for Y.
 #' @param E An n-dimensional vector, defining the grouping.
-#' @param adjFactor Bonferroni adjustment factor for p-value if multiple tests were performed.
 #' @param verbose Set to \code{TRUE} if output should be printed.
 #'
 #' @return A list with the p-value for the test.
-leveneAndWilcoxResidualDistributions <- function(Y, predicted, E, adjFactor, verbose){
+leveneAndWilcoxResidualDistributions <- function(Y, predicted, E, verbose){
   uniqueE <- unique(E)
   numUniqueE <- length(uniqueE)
   residuals <- Y - predicted
@@ -30,7 +29,7 @@ leveneAndWilcoxResidualDistributions <- function(Y, predicted, E, adjFactor, ver
 
   pvalueWilcoxon <- pvalueWilcoxon*bonfAdjustment
 
-  pvalue <- adjFactor*2*min(pvalueWilcoxon, pvalueLevene)
+  pvalue <- 2*min(pvalueWilcoxon, pvalueLevene)
 
   if(verbose)
     cat(paste("\np-value: ", pvalue))

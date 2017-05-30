@@ -4,7 +4,7 @@
 \alias{wilcoxTestTargetY}
 \title{Wilcoxon test to compare two mean squared error rates.}
 \usage{
-wilcoxTestTargetY(Y, predictedOnlyX, predictedXE, adjFactor, verbose, ...)
+wilcoxTestTargetY(Y, predictedOnlyX, predictedXE, verbose, ...)
 }
 \arguments{
 \item{Y}{An n-dimensional vector.}
@@ -12,8 +12,6 @@ wilcoxTestTargetY(Y, predictedOnlyX, predictedXE, adjFactor, verbose, ...)
 \item{predictedOnlyX}{Predictions for Y based on predictors in X only.}
 
 \item{predictedXE}{Predictions for Y based on predictors in X and E.}
-
-\item{adjFactor}{Bonferroni adjustment factor for p-value if multiple tests were performed.}
 
 \item{verbose}{Set to \code{TRUE} if output should be printed.}
 

@@ -19,10 +19,10 @@
 #' @return A list with the following entries:
 #' \itemize{
 #'  \item \code{testStatistic} the statistic Tr(K_{(ddot{(X)}|Z)} * K_{(Y|Z)})
-#'  \item \code{criticalValue} the critical point at the p-value equal to alpha obtained by bootstrapping.
-#'  \item \code{pValue} the p value obtained by bootstrapping.
-#'  \item \code{criticalValueApprox} the critical value obtained by Gamma approximation.
-#'  \item \code{pValueApprox} the p-value obtained by Gamma approximation.
+#'  \item \code{criticalValue} the critical point at the p-value equal to alpha;
+#'   obtained by bootstrapping if \code{bootstrap = TRUE}, otherwise obtained by Gamma approximation..
+#'  \item \code{pvalue} The p value for the null hypothesis that Y and E are independent given X.
+#'  It is obtained by bootstrapping if \code{bootstrap = TRUE}, otherwise obtained by Gamma approximation..
 #'  }
 #'
 #' @examples
@@ -91,7 +91,8 @@ KCI <- function(Y, E, X,
   if(is.factor(E)){
     # show(E)
     # delta kernel for discrete variable E
-    KE <- (E^2 == (E %*% t(E))) %*% diag(n)
+    Enum <- as.numeric(E)
+    KE <- (Enum^2 == (Enum %*% t(Enum))) %*% diag(n)
   } else {
     E <- scale(E)
     KE <- rbfKernel1(E, c(kernPrecision,1))$kx
@@ -215,26 +216,23 @@ KCI <- function(Y, E, X,
     sortNullDistr <- sort(nullDistr)
     critVal <- sortNullDistr[ceiling((1-alpha)*nRepBs)]
     pVal <- sum(nullDistr > statistic)/nRepBs
-  }
+  }else if(approx){
 
-  critValAppr <- NULL
-  pValAppr <- NULL
-
-  if(approx){
     meanApprox <- sum(diag(uuProd))
     varApprox <- 2*sum(diag(uuProd^2))
     kApprox <- meanApprox^2/varApprox
     kernPrecisionApprox <- varApprox/meanApprox
-    critValAppr <- qgamma(1-alpha,
+    critVal <- qgamma(1-alpha,
                           shape = kApprox,
                           scale = kernPrecisionApprox,
                           lower.tail = TRUE)
-    pValAppr <- 1 - pgamma(statistic,
+    pVal <- 1 - pgamma(statistic,
                            shape = kApprox,
                            scale = kernPrecisionApprox,
                            lower.tail = TRUE)
+  }else{
+    stop("Either 'approx' or 'bootstrap' needs to be set to TRUE.")
   }
 
-  list(testStatistic = statistic, criticalValue = critVal,
-       pValue = pVal, criticalValueApprox = critValAppr, pValueApprox = pValAppr)
+  list(testStatistic = statistic, criticalValue = critVal, pvalue = pVal)
 }

@@ -10,7 +10,7 @@ ResidualPredictionTest(Y, E, X, alpha = 0.05, verbose = FALSE,
   noiseMat = NULL, getnoiseFct = function(n, ...) {     rnorm(n) },
   argsGetNoiseFct = NULL, nSim = 100, funcOfRes = function(x) {     abs(x)
   }, useX = TRUE, returnXBasis = FALSE, nSub = ceiling(NROW(X)/4),
-  ntree = 100, nodesize = 5, maxnodes = NULL, nSeqTests = 1)
+  ntree = 100, nodesize = 5, maxnodes = NULL)
 }
 \arguments{
 \item{Y}{An n-dimensional vector.}
@@ -59,9 +59,6 @@ predicting the scaled residuals with E.}
 
 \item{maxnodes}{Random forest parameter: Maximum number of terminal nodes trees in the forest can have.
 Defaults to NULL.}
-
-\item{nSeqTests}{Bonferroni adjustment factor if previous tests where performed
-(e.g. with subsamples).}
 }
 \value{
 A list with the following entries:

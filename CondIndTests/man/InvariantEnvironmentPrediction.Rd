@@ -8,7 +8,7 @@ InvariantEnvironmentPrediction(Y, E, X, alpha = 0.05, verbose = FALSE,
   trainTestSplitFunc = caTools::sample.split,
   argsTrainTestSplitFunc = list(SplitRatio = 0.8), test = propTestTargetE,
   mtry = sqrt(NCOL(X)), ntree = 100, nodesize = 50, maxnodes = NULL,
-  permute = TRUE, nSeqTests = 1, returnModel = FALSE)
+  permute = TRUE, returnModel = FALSE)
 }
 \arguments{
 \item{Y}{An n-dimensional vector.}
@@ -44,11 +44,11 @@ Defaults to NULL.}
 \item{permute}{Random forest parameter: If \code{TRUE}, model that would use X only
 for predicting Y also includes a random permutation of E.}
 
-\item{nSeqTests}{Bonferroni adjustment factor if previous tests where performed
-(e.g. with subsamples).}
-
 \item{returnModel}{If \code{TRUE}, the fitted quantile regression forest model
 will be returned.}
+
+\item{nSeqTests}{Bonferroni adjustment factor if previous tests where performed
+(e.g. with subsamples).}
 }
 \value{
 A list with the following entries:

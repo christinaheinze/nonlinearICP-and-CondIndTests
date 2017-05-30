@@ -7,7 +7,6 @@
 #' @param X A matrix or dataframe with n rows and p columns.
 #' @param alpha Significance level. Defaults to 0.05.
 #' @param verbose If \code{TRUE}, intermediate output is provided. Defaults to \code{FALSE}.
-#' @param test Is NULL for this test.
 #' @param degree Degree of polynomial to use if basis = 'polynomial' or basis = 'nystrom_poly'.
 #' @param basis Can be one of "nystrom", "nystrom_poly", "fourier", "polynomial",
 #' "provided". Defaults to "nystrom".
@@ -28,8 +27,6 @@
 #' @param nodesize Random forest parameter: Minimum size of terminal nodes. Defaults to 5.
 #' @param maxnodes Random forest parameter: Maximum number of terminal nodes trees in the forest can have.
 #' Defaults to NULL.
-#' @param nSeqTests Bonferroni adjustment factor if previous tests where performed
-#' (e.g. with subsamples).
 #'
 #' @return A list with the following entries:
 #' \itemize{
@@ -63,7 +60,6 @@
 ResidualPredictionTest <- function(Y, E, X,
                             alpha = 0.05,
                             verbose = FALSE,
-                            test = NULL,
                             degree = 4,
                             basis = c("nystrom",
                                       "nystrom_poly",
@@ -82,8 +78,7 @@ ResidualPredictionTest <- function(Y, E, X,
                             nSub = ceiling(NROW(X)/4),
                             ntree = 100,
                             nodesize = 5,
-                            maxnodes = NULL,
-                            nSeqTests = 1){
+                            maxnodes = NULL){
 
   if(verbose){
     cat("\nFunction of residuals:")
@@ -186,7 +181,7 @@ ResidualPredictionTest <- function(Y, E, X,
   statsim <- numeric(nSim)
   statsim2 <- numeric(nSim)
 
-  inputMat <- if(NCOL(X) == 1 & all(X == 1)) noiseMat else RPtestRes$resid_sim
+  inputMat <- if(NCOL(X) == 1 & all(X == 1)) t(noiseMat) else RPtestRes$resid_sim
   ret <- apply(inputMat, 2, function(res){
         if(NCOL(X) == 1 & all(X == 1)){
           simnoise <- res
@@ -221,7 +216,7 @@ ResidualPredictionTest <- function(Y, E, X,
 
   pvalue1 <- min(1,mean(statsim>stat) +1/length(statsim))
   pvalue2 <- min(1,mean(statsim2>stat2) +1/length(statsim2))
-  pvalue <- min(2*min(pvalue1, pvalue2)*nSeqTests, 1)
+  pvalue <- min(2*min(pvalue1, pvalue2), 1)
 
   if(verbose){
     cat(paste("\np-value: ", signif(pvalue,2)))

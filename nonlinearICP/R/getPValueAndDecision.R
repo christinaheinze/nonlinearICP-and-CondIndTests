@@ -1,14 +1,13 @@
 getPValueAndDecision <- function(X, Y, environment,
-                                 condIndTest = gamTargetY,
-                                 argsCondIndTest = NULL,
-                                 alpha=0.05,
-                                 varPreSelectionFunc = varSelectionRF,
-                                 argsVarPreSelectionFunc = NULL,
-                                 maxSizeSets = ncol(X),
-                                 condIndTestNames = NULL,
-                                 speedUp = TRUE,
-                                 subsampleSize = c(0.1, 0.25, 0.5, 0.75, 1),
-                                 retrieveDefiningsSets = TRUE,
+                                 condIndTest,
+                                 argsCondIndTest,
+                                 alpha,
+                                 varPreSelectionFunc,
+                                 argsVarPreSelectionFunc,
+                                 maxSizeSets,
+                                 condIndTestNames,
+                                 speedUp,
+                                 subsampleSize,
                                  verbose = FALSE){
 
   n <- length(Y)
@@ -25,16 +24,17 @@ getPValueAndDecision <- function(X, Y, environment,
       if(verbose)
         cat(paste("\nwith subsample of size ", sum(subsampleInd), sep=""))
 
-      pvalueAndDecision <- try(do.call(condIndTest,
-                                       c(list(X[subsampleInd,, drop = FALSE],
-                                              Y[subsampleInd],
+      pvalue <- try(do.call(condIndTest,
+                                       c(list(Y[subsampleInd],
                                               environment[subsampleInd],
+                                              X[subsampleInd,, drop = FALSE],
                                               alpha,
-                                              verbose,
-                                              nSeqTests = length(subsampleSize)),
+                                              verbose
+                                              # nSeqTests = length(subsampleSize)
+                                              ),
                                          argsCondIndTest)),
                                silent = if(subsampleSize[ss] < 1) TRUE else FALSE)
-
+      pvalue$pvalue <- pvalue$pvalue*length(subsampleSize)
 
       # if larger subsamples are still to be tested, continue
       if(inherits(pvalueAndDecision, "try-error") & subsampleSize[ss] < 1){
@@ -43,23 +43,27 @@ getPValueAndDecision <- function(X, Y, environment,
                     ". Continue with larger sample size.",
                     sep=""))
         next
-      }else if(inherits(pvalueAndDecision, "try-error") & subsampleSize[ss] == 1){
+      }else if(inherits(pvalue, "try-error") & subsampleSize[ss] == 1){
         # if full sample was used, throw error
         stop(paste("Error in conditional independence test.", geterrmessage()))
-      }else if(pvalueAndDecision$decision == 0){
+      }else if(pvalue$decision == 0){
         # set has been rejected based on subsample size ss, stop testing
         break
       }
     }
   }else{
-    pvalueAndDecision <- do.call(condIndTest,
-                                 c(list(X,
-                                        Y,
+    pvalue <- do.call(condIndTest,
+                                 c(list(Y,
                                         environment,
+                                        X,
                                         alpha,
-                                        verbose,
-                                        nSeqTests = 1),
+                                        verbose),
                                    argsCondIndTest))
   }
-  pvalueAndDecision
+
+  # retain null hypothesis: decision is 1
+  # reject null hypothesis: decision is 0
+  decision <- if(alpha >= pvalue$pvalue) 0 else 1
+
+  list(pvalue = pvalue$pvalue, decision = decision)
 }

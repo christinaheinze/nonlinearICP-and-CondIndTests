@@ -8,8 +8,7 @@ InvariantTargetPrediction(Y, E, X, alpha = 0.05, verbose = FALSE,
   fitWithGam = TRUE, trainTestSplitFunc = caTools::sample.split,
   argsTrainTestSplitFunc = list(SplitRatio = 0.8), test = fTestTargetY,
   colNameNoSmooth = NULL, mtry = sqrt(NCOL(X)), ntree = 250,
-  nodesize = 5, maxnodes = NULL, permute = TRUE, nSeqTests = 1,
-  returnModel = FALSE)
+  nodesize = 5, maxnodes = NULL, permute = TRUE, returnModel = FALSE)
 }
 \arguments{
 \item{Y}{An n-dimensional vector.}
@@ -47,9 +46,6 @@ Defaults to NULL.}
 
 \item{permute}{Random forest parameter: If \code{TRUE}, model that would use X only
 for predicting Y also includes a random permutation of E.}
-
-\item{nSeqTests}{Bonferroni adjustment factor if previous tests where performed
-(e.g. with subsamples).}
 
 \item{returnModel}{If \code{TRUE}, the fitted quantile regression forest model
 will be returned.}

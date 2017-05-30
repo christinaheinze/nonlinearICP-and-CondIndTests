@@ -5,7 +5,7 @@
 \title{Fishers test to test whether the exceedance of the conditional quantiles
 is independent of the categorical variable E.}
 \usage{
-fishersTestExceedance(Y, predicted, E, adjFactor, verbose)
+fishersTestExceedance(Y, predicted, E, verbose)
 }
 \arguments{
 \item{Y}{An n-dimensional vector.}
@@ -14,8 +14,6 @@ fishersTestExceedance(Y, predicted, E, adjFactor, verbose)
 conditional quantiles of Y|X.}
 
 \item{E}{An n-dimensional vector, defining the grouping.}
-
-\item{adjFactor}{Bonferroni adjustment factor for p-value if multiple tests were performed.}
 
 \item{verbose}{Set to \code{TRUE} if output should be printed.}
 }

@@ -7,11 +7,10 @@
 #' @param E An n-dimensional vector.
 #' @param predictedOnlyX Predictions for E based on predictors in X only.
 #' @param predictedXY Predictions for E based on predictors in X and Y.
-#' @param adjFactor Bonferroni adjustment factor for p-value if multiple tests were performed.
 #' @param verbose Set to \code{TRUE} if output should be printed.
 #'
 #' @return A list with the p-value for the test.
-propTestTargetE <- function(E, predictedOnlyX, predictedXY, adjFactor, verbose){
+propTestTargetE <- function(E, predictedOnlyX, predictedXY, verbose){
 
   n <- NROW(E)
 
@@ -26,7 +25,7 @@ propTestTargetE <- function(E, predictedOnlyX, predictedXY, adjFactor, verbose){
   accOnlyX <- sum(predictedOnlyX == E)
   accXY <- sum(predictedXY == E)
   testResult <- prop.test(c(accXY, accOnlyX), c(n, n), alternative="greater")
-  pvalue <- testResult$p.value*adjFactor
+  pvalue <- testResult$p.value
 
   if(verbose)
     cat(paste("\nTest statistc: ", testResult$statistic))

@@ -23,8 +23,6 @@
 #' Defaults to NULL.
 #' @param permute Random forest parameter: If \code{TRUE}, model that would use X only
 #' for predicting Y also includes a random permutation of E.
-#' @param nSeqTests Bonferroni adjustment factor if previous tests where performed
-#' (e.g. with subsamples).
 #' @param returnModel If \code{TRUE}, the fitted quantile regression forest model
 #' will be returned.
 #'
@@ -72,7 +70,6 @@ InvariantTargetPrediction <-  function(Y, E, X,
                                        nodesize = 5,
                                        maxnodes = NULL,
                                        permute = TRUE,
-                                       nSeqTests = 1,
                                        returnModel = FALSE
                                        ){
 
@@ -109,7 +106,7 @@ InvariantTargetPrediction <-  function(Y, E, X,
     df <- p+1+dimE
   }
 
-  result <- test(Y[testInd], res$predictedOnlyX, res$predictedXE, nSeqTests, verbose, df = df, dimE = dimE)
+  result <- test(Y[testInd], res$predictedOnlyX, res$predictedXE, verbose, df = df, dimE = dimE)
 
   # reject if using X and E has significantly better accuracy than using X only
   if(verbose) cat(paste("\nMSE only X :", round(mean((Y[testInd] - res$predictedOnlyX)^2), 2),

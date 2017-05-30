@@ -1,27 +1,19 @@
-Package: nonlinearICP
+Package: nonlinearICP2
 Type: Package
-Title: What the Package Does (Title Case)
-Version: 0.9
-Date: 2016-09-20
-Author: Who wrote it
-Maintainer: Who to complain to <yourfault@somewhere.net>
-Description: More about what it does (maybe more than one line)
-License: What license is it under?
+Title: Invariant Causal Prediction for Nonlinear Models
+Version: 0.1
+Date: 2017-06-01
+Author: Christina Heinze-Deml <heinzedeml@stat.math.ethz.ch>
+Depends:
+    R (>= 3.1.0)
+Maintainer: Christina Heinze-Deml <heinzedeml@stat.math.ethz.ch>
+Description: Code for 'nonlinear Invariant Causal Prediction', a group of algorithms
+    to estimate the causal parents of a given target variable from data collected in
+    different experimental or environmental conditions. For more details, see <add link>.
+License: GPL
 LazyData: TRUE
 Imports:
-    randomForest,
-    quantregForest,
-    parallel,
-    gptk,
-    backShift,
-    mgcv,
-    data.tree,
-    MASS,
-    caTools,
-    sfsmisc,
-    lawstat,
-    splines,
-    RPtestsChanged,
-    kernlab,
-    KCI
+    CondIndTests,
+    data.tree
 RoxygenNote: 6.0.1
+

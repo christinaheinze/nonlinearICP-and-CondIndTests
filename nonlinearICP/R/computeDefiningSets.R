@@ -1,3 +1,8 @@
+#' Computes the defining sets, given a list of the accepted sets.
+#'
+#' @param as List of the accepted sets.
+#'
+#' @return List of defining sets.
 computeDefiningSets <- function(as){
 
   if(length(as) == 0) return(list())
@@ -121,19 +126,20 @@ buildTrees <- function(as, tree, addTo){
     addTo$AddChild(uniqueVars[i])
   }
 
-  # cur.max <- as.numeric(names(which( occur == max(occur) )))
-
-  # if(length(cur.max) == 1){
-  #   addTo$AddChild(cur.max)
-  # }else{
-  #   for(cm in 1:length(cur.max)){
-  #     addTo$AddChild(cur.max[cm])
-  #   }
-  # }
-
   tree
 }
 
+#' Given a list of defining sets with indices and the corresponding names,
+#' additionally returns a list of defining sets with variable names.
+#'
+#' @param definingSets A list of defining sets with indices
+#' @param colnamesXX Variable names corresponding to the indices.
+#'
+#' @return A list with two entries:
+#' \itemize{
+#'  \item \code{setsUnique} List of defining sets with indices
+#'  \item \code{definingSetsColnames} List of defining sets with variable names.
+#' }
 getListWithIndicesOfDefSets <- function(definingSets, colnamesXX){
   definingSetsColnames <- lapply(definingSets, function(x) colnamesXX[x])
   list(setsUnique = definingSets, definingSetsColnames = definingSetsColnames)

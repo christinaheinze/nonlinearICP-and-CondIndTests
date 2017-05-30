@@ -7,7 +7,7 @@
 InvariantConditionalQuantilePrediction(Y, E, X, alpha = 0.05,
   verbose = FALSE, test = fishersTestExceedance, mtry = sqrt(NCOL(X)),
   ntree = 100, nodesize = max(nrow(X)/1000, 5), maxnodes = NULL,
-  quantiles = c(0.1, 0.5, 0.9), nSeqTests = 1, returnModel = FALSE)
+  quantiles = c(0.1, 0.5, 0.9), returnModel = FALSE)
 }
 \arguments{
 \item{Y}{An n-dimensional vector.}
@@ -35,9 +35,6 @@ candidates at each split.}
 Defaults to NULL.}
 
 \item{quantiles}{Quantiles for which to test independence between exceedence and E.}
-
-\item{nSeqTests}{Bonferroni adjustment factor if previous tests where performed
-(e.g. with subsamples).}
 
 \item{returnModel}{If \code{TRUE}, the fitted quantile regression forest model
 will be returned.}

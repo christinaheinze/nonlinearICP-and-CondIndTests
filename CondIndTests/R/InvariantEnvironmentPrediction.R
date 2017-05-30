@@ -65,7 +65,6 @@ InvariantEnvironmentPrediction <- function(Y, E, X,
                                            nodesize = 50,
                                            maxnodes = NULL,
                                            permute = TRUE,
-                                           nSeqTests = 1,
                                            returnModel = FALSE){
 
   if(!is.factor(E) & length(unique(E)) < 5){
@@ -140,7 +139,7 @@ InvariantEnvironmentPrediction <- function(Y, E, X,
   predictedXY <- predict(rfResultXY, newdata = matXYPred)
 
   # test whether performance is statistically indistinguishable
-  result <- test(E[testInd], predictedOnlyX, predictedXY, nSeqTests, verbose)
+  result <- test(E[testInd], predictedOnlyX, predictedXY, verbose)
 
 
   # reject if using X and E has significantly better accuracy than using X only

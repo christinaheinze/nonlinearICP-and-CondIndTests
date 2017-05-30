@@ -25,10 +25,10 @@ KCI(Y, E, X, width = 0, alpha = 0.05, unbiased = FALSE, approx = TRUE,
 A list with the following entries:
 \itemize{
  \item \code{testStatistic} the statistic Tr(K_{(ddot{(X)}|Z)} * K_{(Y|Z)})
- \item \code{criticalValue} the critical point at the p-value equal to alpha obtained by bootstrapping.
- \item \code{pValue} the p value obtained by bootstrapping.
- \item \code{criticalValueApprox} the critical value obtained by Gamma approximation.
- \item \code{pValueApprox} the p-value obtained by Gamma approximation.
+ \item \code{criticalValue} the critical point at the p-value equal to alpha;
+  obtained by bootstrapping if \code{bootstrap = TRUE}, otherwise obtained by Gamma approximation..
+ \item \code{pvalue} The p value for the null hypothesis that Y and E are independent given X.
+ It is obtained by bootstrapping if \code{bootstrap = TRUE}, otherwise obtained by Gamma approximation..
  }
 }
 \description{

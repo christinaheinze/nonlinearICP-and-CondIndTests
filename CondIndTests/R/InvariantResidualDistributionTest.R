@@ -18,8 +18,6 @@
 #' @param nodesize Random forest parameter: Minimum size of terminal nodes. Defaults to 5.
 #' @param maxnodes Random forest parameter: Maximum number of terminal nodes trees in the forest can have.
 #' Defaults to NULL.
-#' @param nSeqTests Bonferroni adjustment factor if previous tests where performed
-#' (e.g. with subsamples).
 #' @param returnModel If \code{TRUE}, the fitted quantile regression forest model
 #' will be returned.
 #'
@@ -56,7 +54,6 @@ InvariantResidualDistributionTest <- function(Y, E, X,
                                               ntree = 500,
                                               nodesize = 5,
                                               maxnodes = NULL,
-                                              nSeqTests = 1,
                                               returnModel = FALSE){
 
   if(!is.factor(E)){
@@ -77,7 +74,7 @@ InvariantResidualDistributionTest <- function(Y, E, X,
   }
 
   # test whether residual distribution is identical in all environments E
-  result <- test(Y, res$predicted, E, nSeqTests, verbose)
+  result <- test(Y, res$predicted, E, verbose)
 
 
   if(returnModel){

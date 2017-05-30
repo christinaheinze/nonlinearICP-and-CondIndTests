@@ -7,11 +7,10 @@
 #' @param Y An n-dimensional vector.
 #' @param predicted An n-dimensional vector of predictions for Y.
 #' @param E An n-dimensional vector, defining the grouping.
-#' @param adjFactor Bonferroni adjustment factor for p-value if multiple tests were performed.
 #' @param verbose Set to \code{TRUE} if output should be printed.
 #'
 #' @return A list with the p-value for the test.
-ksResidualDistributions <- function(Y, predicted, E, adjFactor, verbose){
+ksResidualDistributions <- function(Y, predicted, E, verbose){
 
   uniqueE <- unique(E)
   numUniqueE <- length(uniqueE)
@@ -26,7 +25,7 @@ ksResidualDistributions <- function(Y, predicted, E, adjFactor, verbose){
 
   bonfAdjustment <- if(numUniqueE == 2) 1 else numUniqueE
 
-  pvalue <- pvalue*bonfAdjustment*adjFactor
+  pvalue <- pvalue*bonfAdjustment
 
   if(verbose)
     cat(paste("\np-value: ", pvalue))

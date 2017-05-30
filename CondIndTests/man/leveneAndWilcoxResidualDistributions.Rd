@@ -4,7 +4,7 @@
 \alias{leveneAndWilcoxResidualDistributions}
 \title{Levene and wilcoxon test to compare first and second moments of residual distributions}
 \usage{
-leveneAndWilcoxResidualDistributions(Y, predicted, E, adjFactor, verbose)
+leveneAndWilcoxResidualDistributions(Y, predicted, E, verbose)
 }
 \arguments{
 \item{Y}{An n-dimensional vector.}
@@ -12,8 +12,6 @@ leveneAndWilcoxResidualDistributions(Y, predicted, E, adjFactor, verbose)
 \item{predicted}{An n-dimensional vector of predictions for Y.}
 
 \item{E}{An n-dimensional vector, defining the grouping.}
-
-\item{adjFactor}{Bonferroni adjustment factor for p-value if multiple tests were performed.}
 
 \item{verbose}{Set to \code{TRUE} if output should be printed.}
 }

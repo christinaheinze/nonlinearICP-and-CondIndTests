@@ -17,8 +17,6 @@
 #' @param maxnodes Random forest parameter: Maximum number of terminal nodes trees in the forest can have.
 #' Defaults to NULL.
 #' @param quantiles Quantiles for which to test independence between exceedence and E.
-#' @param nSeqTests Bonferroni adjustment factor if previous tests where performed
-#' (e.g. with subsamples).
 #' @param returnModel If \code{TRUE}, the fitted quantile regression forest model
 #' will be returned.
 #'
@@ -51,7 +49,6 @@ InvariantConditionalQuantilePrediction <- function(Y, E, X,
                                                   nodesize = max(nrow(X)/1000, 5),
                                                   maxnodes = NULL,
                                                   quantiles = c(0.1, 0.5, 0.9),
-                                                  nSeqTests = 1,
                                                   returnModel = FALSE){
 
   n <- NROW(X)
@@ -71,7 +68,7 @@ InvariantConditionalQuantilePrediction <- function(Y, E, X,
   predicted <- predict(rfResult, newdata = mat, what = quantiles)
 
   # test whether residual distribution is identical in all environments E
-  result <- test(Y, predicted, E, nSeqTests, verbose)
+  result <- test(Y, predicted, E, verbose)
 
   if(returnModel){
     result$model <- list(rfResult = rfResult)
