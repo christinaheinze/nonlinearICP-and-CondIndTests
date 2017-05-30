@@ -30,13 +30,16 @@
 #'  }
 #'
 #' @examples
+#'
+#' # Example 1
 #' n <- 1000
 #' E <- rbinom(n, size = 1, prob = 0.2)
 #' X <- 4 + 2 * E + rnorm(n)
 #' Y <- 3 * (X)^2 + rnorm(n)
 #' InvariantResidualDistributionTest(Y, as.factor(E), X)
 #' InvariantResidualDistributionTest(Y, as.factor(E), X, test = ksResidualDistributions)
-
+#'
+#' # Example 2
 #' E <- rbinom(n, size = 1, prob = 0.2)
 #' X <- 4 + 2 * E + rnorm(n)
 #' Y <- 3 * E + rnorm(n)
@@ -74,7 +77,7 @@ InvariantResidualDistributionTest <- function(Y, E, X,
   }
 
   # test whether residual distribution is identical in all environments E
-  result <- test(Y, res$predicted, E, n, p, alpha, nSeqTests, verbose)
+  result <- test(Y, res$predicted, E, nSeqTests, verbose)
 
 
   if(returnModel){

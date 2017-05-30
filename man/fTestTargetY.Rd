@@ -2,17 +2,29 @@
 % Please edit documentation in R/fTestTargetY.R
 \name{fTestTargetY}
 \alias{fTestTargetY}
-\title{F test to compare two fits...}
+\title{F-test for a nested model comparison.}
 \usage{
-fTestTargetY(Y, predictedOnlyX, predictedXE, n, p, alpha, nSeqTests, verbose,
-  ...)
+fTestTargetY(Y, predictedOnlyX, predictedXE, adjFactor, verbose, ...)
 }
 \arguments{
-\item{verbose}{}
+\item{Y}{An n-dimensional vector.}
+
+\item{predictedOnlyX}{Predictions for Y based on predictors in X only.}
+
+\item{predictedXE}{Predictions for Y based on predictors in X and E.}
+
+\item{adjFactor}{Bonferroni adjustment factor for p-value if multiple tests were performed.}
+
+\item{verbose}{Set to \code{TRUE} if output should be printed.}
+
+\item{...}{The dimensions of X (df) and E (dimE) need to be passed via the ...
+argument to allow for coherent interface of fTestTargetY and wilcoxTestTargetY.}
 }
 \value{
 A list with the p-value for the test.
 }
 \description{
-Tests whether ...
+Used as a subroutine in \code{InvariantTargetPrediction} to test
+whether out-of-sample performance is better when using X and E as predictors for Y,
+compared to using X only.
 }

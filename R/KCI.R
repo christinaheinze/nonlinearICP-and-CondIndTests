@@ -2,15 +2,14 @@
 #'
 #' @description Tests the null hypothesis that Y and E are independent given X.
 #'
-#' @param Y
-#' @param E
-#' @param X
+#' @param Y A vector of length n or a matrix or dataframe with n rows and p columns.
+#' @param E A vector of length n or a matrix or dataframe with n rows and p columns.
+#' @param X A matrix or dataframe with n rows and p columns.
 #' @param width Kernel width
-#' @param alpha Significance level
+#' @param alpha Significance level.  Defaults to 0.05.
 #' @param unbiased
 #' @param approx
 #' @param bootstrap
-#' @param isEcategorical
 #' @param nRepBs
 #' @param lambda
 #' @param thresh
@@ -40,16 +39,15 @@ KCI <- function(Y, E, X,
                 unbiased = FALSE,
                 approx = TRUE,
                 bootstrap = TRUE,
-                isEcategorical = FALSE,
                 nRepBs = 500,
                 lambda = 1E-3,
                 thresh = 1E-5,
                 numEig = length(Y),
                 verbose = FALSE){
 
-  #TODO
-  # check input argument types;
-  # if is.null(X) perform unconditional test? --> just HSIC
+  if(!is.factor(E) & length(unique(E)) < 5){
+    warning("E has less than 5 unique values; are you sure that E is not a factor?")
+  }
 
   # sample size
   n <- length(Y) # what if Y is a matrix?
@@ -90,8 +88,8 @@ KCI <- function(Y, E, X,
   # KYX <- H %*% KYX %*% H
   KYX <- crossprod(H, KYX) %*% H
 
-  if(isEcategorical){
-    show(E)
+  if(is.factor(E)){
+    # show(E)
     # delta kernel for discrete variable E
     KE <- (E^2 == (E %*% t(E))) %*% diag(n)
   } else {

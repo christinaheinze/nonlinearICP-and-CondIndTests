@@ -1,18 +1,19 @@
-#'  test to compare two misclassification rates.
+#' Proportion test to compare two misclassification rates.
 #'
-#' @description Tests whether ...
+#' @description Used as a subroutine in \code{InvariantEnvironmentPrediction} to test
+#' whether out-of-sample performance is better when using X and Y as predictors for E,
+#' compared to using X only.
 #'
-#' @param E
-#' @param predictedOnlyX
-#' @param predictedXY
-#' @param n
-#' @param p
-#' @param alpha
-#' @param nSeqTests
-#' @param verbose
+#' @param E An n-dimensional vector.
+#' @param predictedOnlyX Predictions for E based on predictors in X only.
+#' @param predictedXY Predictions for E based on predictors in X and Y.
+#' @param adjFactor Bonferroni adjustment factor for p-value if multiple tests were performed.
+#' @param verbose Set to \code{TRUE} if output should be printed.
 #'
 #' @return A list with the p-value for the test.
-propTestTargetE <- function(E, predictedOnlyX, predictedXY, n, p, alpha, nSeqTests, verbose){
+propTestTargetE <- function(E, predictedOnlyX, predictedXY, adjFactor, verbose){
+
+  n <- NROW(E)
 
   if(!is.factor(E)){
     stop("propTestTargetE can only be applied if E is a factor.")
@@ -25,7 +26,7 @@ propTestTargetE <- function(E, predictedOnlyX, predictedXY, n, p, alpha, nSeqTes
   accOnlyX <- sum(predictedOnlyX == E)
   accXY <- sum(predictedXY == E)
   testResult <- prop.test(c(accXY, accOnlyX), c(n, n), alternative="greater")
-  pvalue <- testResult$p.value*nSeqTests
+  pvalue <- testResult$p.value*adjFactor
 
   if(verbose)
     cat(paste("\nTest statistc: ", testResult$statistic))

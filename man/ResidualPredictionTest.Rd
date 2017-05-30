@@ -7,10 +7,10 @@
 ResidualPredictionTest(Y, E, X, alpha = 0.05, verbose = FALSE,
   test = NULL, degree = 4, basis = c("nystrom", "nystrom_poly", "fourier",
   "polynomial", "provided")[1], resid_type = "OLS", XBasis = NULL,
-  noiseMat = NULL, getnoiseFct = getNoiseStdNorm, argsGetNoiseFct = NULL,
-  nSim = 100, funcOfRes = function(x) {     abs(x) }, useX = TRUE,
-  returnXBasis = FALSE, nSub = ceiling(NROW(X)/4), ntree = 100,
-  nodesize = 5, maxnodes = NULL, nSeqTests = 1, returnModel = FALSE)
+  noiseMat = NULL, getnoiseFct = function(n, ...) {     rnorm(n) },
+  argsGetNoiseFct = NULL, nSim = 100, funcOfRes = function(x) {     abs(x)
+  }, useX = TRUE, returnXBasis = FALSE, nSub = ceiling(NROW(X)/4),
+  ntree = 100, nodesize = 5, maxnodes = NULL, nSeqTests = 1)
 }
 \arguments{
 \item{Y}{An n-dimensional vector.}
@@ -22,6 +22,36 @@ ResidualPredictionTest(Y, E, X, alpha = 0.05, verbose = FALSE,
 \item{alpha}{Significance level. Defaults to 0.05.}
 
 \item{verbose}{If \code{TRUE}, intermediate output is provided. Defaults to \code{FALSE}.}
+
+\item{test}{Is NULL for this test.}
+
+\item{degree}{Degree of polynomial to use if basis = 'polynomial' or basis = 'nystrom_poly'.}
+
+\item{basis}{Can be one of "nystrom", "nystrom_poly", "fourier", "polynomial",
+"provided". Defaults to "nystrom".}
+
+\item{resid_type}{Can be "Lasso" or "OLS". Defaults to "OLS".}
+
+\item{XBasis}{Basis if basis = "provided".}
+
+\item{noiseMat}{Matrix with simulated noise. Defaults to NULL in which case the
+simulation is performed inside the function.}
+
+\item{getnoiseFct}{Function to use to generate the noise matrix.}
+
+\item{argsGetNoiseFct}{Arguments for \code{getnoiseFct}.}
+
+\item{nSim}{Number of simulations to use.}
+
+\item{funcOfRes}{Function of residuals to use in addition to predicting the
+conditional mean.}
+
+\item{useX}{Set to \code{TRUE} if the predictors in X should also be used when
+predicting the scaled residuals with E.}
+
+\item{returnXBasis}{Set to \code{TRUE} if basis expansion should be returned.}
+
+\item{nSub}{Number of random features to use if basis = "nystrom", "nystrom_poly" or "fourier".}
 
 \item{ntree}{Random forest parameter: Number of trees to grow. Defaults to 500.}
 
@@ -37,29 +67,32 @@ Defaults to NULL.}
 A list with the following entries:
 \itemize{
  \item \code{pValue} The p value for the null hypothesis that Y and E are independent given X.
- \item \code{XBasis}
- \item \code{fctBasisExpansion}
+ \item \code{XBasis} Basis expansion if \code{returnXBasis} was set to \code{TRUE}.
+ \item \code{fctBasisExpansion} Function used to create basis expansion if basis is not "provided".
  }
 }
 \description{
 Tests the null hypothesis that Y and E are independent given X.
 }
 \examples{
-n <- 1000
+# Example 1
+n <- 100
 E <- rbinom(n, size = 1, prob = 0.2)
 X <- 4 + 2 * E + rnorm(n)
 Y <- 3 * (X)^2 + rnorm(n)
-ResidualPredictionTest(Y, as.factor(E), X, basis = "polynomial")
+ResidualPredictionTest(Y, as.factor(E), X)
 
+# Example 2
 E <- rbinom(n, size = 1, prob = 0.2)
 X <- 4 + 2 * E + rnorm(n)
 Y <- 3 * E + rnorm(n)
-ResidualPredictionTest(Y, as.factor(E), X, basis = "polynomial")
+ResidualPredictionTest(Y, as.factor(E), X)
 
-n <- 1000
-E <- rnorm(n)
-X <- 4 + 2 * E + rnorm(n)
-Y <- 3 * (X)^2 + rnorm(n)
-ResidualPredictionTest(Y, E, X)
-ResidualPredictionTest(Y, X, E)
+# not run:
+# # Example 3
+# E <- rnorm(n)
+# X <- 4 + 2 * E + rnorm(n)
+# Y <- 3 * (X)^2 + rnorm(n)
+# ResidualPredictionTest(Y, E, X)
+# ResidualPredictionTest(Y, X, E)
 }

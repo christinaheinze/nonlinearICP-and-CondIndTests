@@ -35,6 +35,7 @@
 #'  }
 #'
 #' @examples
+#' # Example 1
 #' n <- 1000
 #' E <- rbinom(n, size = 1, prob = 0.2)
 #' X <- 4 + 2 * E + rnorm(n)
@@ -42,13 +43,14 @@
 #' InvariantTargetPrediction(Y, as.factor(E), X)
 #' InvariantTargetPrediction(Y, as.factor(E), X, test = wilcoxTestTargetY)
 #'
+#' # Example 2
 #' E <- rbinom(n, size = 1, prob = 0.2)
 #' X <- 4 + 2 * E + rnorm(n)
 #' Y <- 3 * E + rnorm(n)
 #' InvariantTargetPrediction(Y, as.factor(E), X)
 #' InvariantTargetPrediction(Y, as.factor(E), X, test = wilcoxTestTargetY)
 #'
-#' n <- 100
+#' # Example 3
 #' E <- rnorm(n)
 #' X <- 4 + 2 * E + rnorm(n)
 #' Y <- 3 * (X)^2 + rnorm(n)
@@ -107,7 +109,7 @@ InvariantTargetPrediction <-  function(Y, E, X,
     df <- p+1+dimE
   }
 
-  result <- test(Y[testInd], res$predictedOnlyX, res$predictedXE, n, df, alpha, nSeqTests, verbose, dimE)
+  result <- test(Y[testInd], res$predictedOnlyX, res$predictedXE, nSeqTests, verbose, df = df, dimE = dimE)
 
   # reject if using X and E has significantly better accuracy than using X only
   if(verbose) cat(paste("\nMSE only X :", round(mean((Y[testInd] - res$predictedOnlyX)^2), 2),

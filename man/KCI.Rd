@@ -5,13 +5,19 @@
 \title{Kernel conditional independence test.}
 \usage{
 KCI(Y, E, X, width = 0, alpha = 0.05, unbiased = FALSE, approx = TRUE,
-  bootstrap = TRUE, isEcategorical = FALSE, nRepBs = 500,
-  lambda = 0.001, thresh = 1e-05, numEig = length(Y), verbose = FALSE)
+  bootstrap = TRUE, nRepBs = 500, lambda = 0.001, thresh = 1e-05,
+  numEig = length(Y), verbose = FALSE)
 }
 \arguments{
+\item{Y}{A vector of length n or a matrix or dataframe with n rows and p columns.}
+
+\item{E}{A vector of length n or a matrix or dataframe with n rows and p columns.}
+
+\item{X}{A matrix or dataframe with n rows and p columns.}
+
 \item{width}{Kernel width}
 
-\item{alpha}{Significance level}
+\item{alpha}{Significance level.  Defaults to 0.05.}
 
 \item{verbose}{}
 }

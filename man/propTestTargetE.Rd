@@ -2,16 +2,26 @@
 % Please edit documentation in R/propTestTargetE.R
 \name{propTestTargetE}
 \alias{propTestTargetE}
-\title{test to compare two misclassification rates.}
+\title{Proportion test to compare two misclassification rates.}
 \usage{
-propTestTargetE(E, predictedOnlyX, predictedXY, n, p, alpha, nSeqTests, verbose)
+propTestTargetE(E, predictedOnlyX, predictedXY, adjFactor, verbose)
 }
 \arguments{
-\item{verbose}{}
+\item{E}{An n-dimensional vector.}
+
+\item{predictedOnlyX}{Predictions for E based on predictors in X only.}
+
+\item{predictedXY}{Predictions for E based on predictors in X and Y.}
+
+\item{adjFactor}{Bonferroni adjustment factor for p-value if multiple tests were performed.}
+
+\item{verbose}{Set to \code{TRUE} if output should be printed.}
 }
 \value{
 A list with the p-value for the test.
 }
 \description{
-Tests whether ...
+Used as a subroutine in \code{InvariantEnvironmentPrediction} to test
+whether out-of-sample performance is better when using X and Y as predictors for E,
+compared to using X only.
 }

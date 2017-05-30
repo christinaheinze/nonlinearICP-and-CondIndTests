@@ -2,16 +2,26 @@
 % Please edit documentation in R/ksResidualDistributions.R
 \name{ksResidualDistributions}
 \alias{ksResidualDistributions}
-\title{KS test to compare residual distributions}
+\title{Kolmogorov-Smirnov test to compare residual distributions}
 \usage{
-ksResidualDistributions(Y, predicted, E, n, p, alpha, nSeqTests, verbose)
+ksResidualDistributions(Y, predicted, E, adjFactor, verbose)
 }
 \arguments{
-\item{verbose}{}
+\item{Y}{An n-dimensional vector.}
+
+\item{predicted}{An n-dimensional vector of predictions for Y.}
+
+\item{E}{An n-dimensional vector, defining the grouping.}
+
+\item{adjFactor}{Bonferroni adjustment factor for p-value if multiple tests were performed.}
+
+\item{verbose}{Set to \code{TRUE} if output should be printed.}
 }
 \value{
 A list with the p-value for the test.
 }
 \description{
-Tests whether ...
+Used as a subroutine in \code{InvariantResidualDistributionTest}
+to test whether residual distribution remains invariant across different levels
+of E.
 }

@@ -4,15 +4,26 @@
 \alias{wilcoxTestTargetY}
 \title{Wilcoxon test to compare two mean squared error rates.}
 \usage{
-wilcoxTestTargetY(Y, predictedOnlyX, predictedXE, n, p, alpha, nSeqTests,
-  verbose, ...)
+wilcoxTestTargetY(Y, predictedOnlyX, predictedXE, adjFactor, verbose, ...)
 }
 \arguments{
-\item{verbose}{}
+\item{Y}{An n-dimensional vector.}
+
+\item{predictedOnlyX}{Predictions for Y based on predictors in X only.}
+
+\item{predictedXE}{Predictions for Y based on predictors in X and E.}
+
+\item{adjFactor}{Bonferroni adjustment factor for p-value if multiple tests were performed.}
+
+\item{verbose}{Set to \code{TRUE} if output should be printed.}
+
+\item{...}{Argument to allow for coherent interface of fTestTargetY and wilcoxTestTargetY.}
 }
 \value{
 A list with the p-value for the test.
 }
 \description{
-Tests whether ...
+Used as a subroutine in \code{InvariantTargetPrediction} to test
+whether out-of-sample performance is better when using X and E as predictors for Y,
+compared to using X only.
 }

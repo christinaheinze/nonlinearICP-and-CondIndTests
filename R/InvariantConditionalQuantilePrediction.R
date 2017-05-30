@@ -29,12 +29,14 @@
 #'  }
 #'
 #' @examples
+#' # Example 1
 #' n <- 1000
 #' E <- rbinom(n, size = 1, prob = 0.2)
 #' X <- 4 + 2 * E + rnorm(n)
 #' Y <- 3 * (X)^2 + rnorm(n)
 #' InvariantConditionalQuantilePrediction(Y, as.factor(E), X)
 #'
+#' # Example 2
 #' E <- rbinom(n, size = 1, prob = 0.2)
 #' X <- 4 + 2 * E + rnorm(n)
 #' Y <- 3 * E + rnorm(n)
@@ -69,7 +71,7 @@ InvariantConditionalQuantilePrediction <- function(Y, E, X,
   predicted <- predict(rfResult, newdata = mat, what = quantiles)
 
   # test whether residual distribution is identical in all environments E
-  result <- test(Y, predicted, E, n, p, alpha, nSeqTests, verbose)
+  result <- test(Y, predicted, E, nSeqTests, verbose)
 
   if(returnModel){
     result$model <- list(rfResult = rfResult)

@@ -6,7 +6,7 @@ importFrom("methods", "show")
 importFrom("stats", "as.formula", "dist", "fisher.test", "ks.test",
              "lm", "median", "pf", "pgamma", "prop.test",
              "qgamma", "rchisq", "residuals", "rnorm", "sd",
-             "wilcox.test", "xtabs")
+             "wilcox.test", "xtabs", "runif")
 
 export(KCI)
 export(InvariantConditionalQuantilePrediction, fishersTestExceedance)

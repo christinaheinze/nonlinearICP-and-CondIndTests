@@ -1,23 +1,24 @@
-#' F test to compare two fits...
+#' F-test for a nested model comparison.
 #'
-#' @description Tests whether ...
+#' @description Used as a subroutine in \code{InvariantTargetPrediction} to test
+#' whether out-of-sample performance is better when using X and E as predictors for Y,
+#' compared to using X only.
 #'
-#' @param Y
-#' @param predictedOnlyX
-#' @param predictedXE
-#' @param n
-#' @param p
-#' @param dimE
-#' @param alpha
-#' @param nSeqTests
-#' @param verbose
+#' @param Y An n-dimensional vector.
+#' @param predictedOnlyX Predictions for Y based on predictors in X only.
+#' @param predictedXE Predictions for Y based on predictors in X and E.
+#' @param adjFactor Bonferroni adjustment factor for p-value if multiple tests were performed.
+#' @param verbose Set to \code{TRUE} if output should be printed.
+#' @param ... The dimensions of X (df) and E (dimE) need to be passed via the ...
+#' argument to allow for coherent interface of fTestTargetY and wilcoxTestTargetY.
 #'
 #' @return A list with the p-value for the test.
-fTestTargetY <- function(Y, predictedOnlyX, predictedXE, n, p, alpha, nSeqTests, verbose, ...){
-
+fTestTargetY <- function(Y, predictedOnlyX, predictedXE, adjFactor, verbose, ...){
+  n <- NROW(n)
   dots <- list(...)
   if(!is.null(dots$dimE)){
     dimE <- dots$dimE
+    p <- dots$df
   }else{
     dimE <- 1
     warning("Assuming E is univariate.")
@@ -31,7 +32,7 @@ fTestTargetY <- function(Y, predictedOnlyX, predictedXE, n, p, alpha, nSeqTests,
     cat(paste("\nF-Statistc: ", fStatistic))
 
   pvalue <- pf(fStatistic, dimE, n-p, lower.tail = FALSE)
-  pvalue <- nSeqTests*pvalue
+  pvalue <- adjFactor*pvalue
 
   if(verbose)
     cat(paste("\np-value: ", pvalue))

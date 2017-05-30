@@ -9,10 +9,11 @@
 #' @param alpha Significance level. Defaults to 0.05.
 #' @param verbose If \code{TRUE}, intermediate output is provided. Defaults to \code{FALSE}.
 #' @param trainTestSplitFunc Function to split sample. Defaults to stratified sampling when
-#' E is a factor,
+#' E is a factor.
 #' @param argsTrainTestSplitFunc Arguments for sampling splitting function.
 #' @param test Unconditional independence test that tests whether the out-of-sample
 #' prediction accuracy is the same when using X only vs. X and Y as predictors for E.
+#' Defaults to \code{propTestTargetE}.
 #' @param mtry Random forest parameter: Number of variables randomly sampled as
 #' candidates at each split.
 #' @param ntree Random forest parameter: Number of trees to grow.
@@ -33,18 +34,20 @@
 #'  }
 #'
 #' @examples
+#' # Example 1
 #' n <- 1000
 #' E <- rbinom(n, size = 1, prob = 0.2)
 #' X <- 4 + 2 * E + rnorm(n)
 #' Y <- 3 * (X)^2 + rnorm(n)
 #' InvariantEnvironmentPrediction(Y, as.factor(E), X)
 #'
+#' # Example 2
 #' E <- rbinom(n, size = 1, prob = 0.2)
 #' X <- 4 + 2 * E + rnorm(n)
 #' Y <- 3 * E + rnorm(n)
 #' InvariantEnvironmentPrediction(Y, as.factor(E), X)
 #'
-#' n <- 1000
+#' # Example 3
 #' E <- rnorm(n)
 #' X <- 4 + 2 * E + rnorm(n)
 #' Y <- 3 * (X)^2 + rnorm(n)
@@ -137,8 +140,7 @@ InvariantEnvironmentPrediction <- function(Y, E, X,
   predictedXY <- predict(rfResultXY, newdata = matXYPred)
 
   # test whether performance is statistically indistinguishable
-  result <- test(E[testInd], predictedOnlyX, predictedXY, n, p,
-                 alpha, nSeqTests, verbose)
+  result <- test(E[testInd], predictedOnlyX, predictedXY, nSeqTests, verbose)
 
 
   # reject if using X and E has significantly better accuracy than using X only

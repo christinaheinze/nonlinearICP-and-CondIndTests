@@ -7,19 +7,23 @@
 #' @param X A matrix or dataframe with n rows and p columns.
 #' @param alpha Significance level. Defaults to 0.05.
 #' @param verbose If \code{TRUE}, intermediate output is provided. Defaults to \code{FALSE}.
-#' @param test
-#' @param degree
-#' @param basis
-#' @param resid_type
-#' @param XBasis
-#' @param noiseMat
-#' @param getnoiseFct
-#' @param argsGetNoiseFct
-#' @param nSim
-#' @param funcOfRes
-#' @param useX
-#' @param returnXBasis
-#' @param nSub
+#' @param test Is NULL for this test.
+#' @param degree Degree of polynomial to use if basis = 'polynomial' or basis = 'nystrom_poly'.
+#' @param basis Can be one of "nystrom", "nystrom_poly", "fourier", "polynomial",
+#' "provided". Defaults to "nystrom".
+#' @param resid_type Can be "Lasso" or "OLS". Defaults to "OLS".
+#' @param XBasis Basis if basis = "provided".
+#' @param noiseMat Matrix with simulated noise. Defaults to NULL in which case the
+#' simulation is performed inside the function.
+#' @param getnoiseFct Function to use to generate the noise matrix.
+#' @param argsGetNoiseFct Arguments for \code{getnoiseFct}.
+#' @param nSim Number of simulations to use.
+#' @param funcOfRes Function of residuals to use in addition to predicting the
+#' conditional mean.
+#' @param useX Set to \code{TRUE} if the predictors in X should also be used when
+#' predicting the scaled residuals with E.
+#' @param returnXBasis Set to \code{TRUE} if basis expansion should be returned.
+#' @param nSub Number of random features to use if basis = "nystrom", "nystrom_poly" or "fourier".
 #' @param ntree Random forest parameter: Number of trees to grow. Defaults to 500.
 #' @param nodesize Random forest parameter: Minimum size of terminal nodes. Defaults to 5.
 #' @param maxnodes Random forest parameter: Maximum number of terminal nodes trees in the forest can have.
@@ -30,27 +34,31 @@
 #' @return A list with the following entries:
 #' \itemize{
 #'  \item \code{pValue} The p value for the null hypothesis that Y and E are independent given X.
-#'  \item \code{XBasis}
-#'  \item \code{fctBasisExpansion}
+#'  \item \code{XBasis} Basis expansion if \code{returnXBasis} was set to \code{TRUE}.
+#'  \item \code{fctBasisExpansion} Function used to create basis expansion if basis is not "provided".
 #'  }
 #'
 #' @examples
-#' n <- 500
+#' # Example 1
+#' n <- 100
 #' E <- rbinom(n, size = 1, prob = 0.2)
 #' X <- 4 + 2 * E + rnorm(n)
 #' Y <- 3 * (X)^2 + rnorm(n)
 #' ResidualPredictionTest(Y, as.factor(E), X)
 #'
+#' # Example 2
 #' E <- rbinom(n, size = 1, prob = 0.2)
 #' X <- 4 + 2 * E + rnorm(n)
 #' Y <- 3 * E + rnorm(n)
 #' ResidualPredictionTest(Y, as.factor(E), X)
 #'
-#' E <- rnorm(n)
-#' X <- 4 + 2 * E + rnorm(n)
-#' Y <- 3 * (X)^2 + rnorm(n)
-#' ResidualPredictionTest(Y, E, X)
-#' ResidualPredictionTest(Y, X, E)
+#' # not run:
+#' # # Example 3
+#' # E <- rnorm(n)
+#' # X <- 4 + 2 * E + rnorm(n)
+#' # Y <- 3 * (X)^2 + rnorm(n)
+#' # ResidualPredictionTest(Y, E, X)
+#' # ResidualPredictionTest(Y, X, E)
 
 ResidualPredictionTest <- function(Y, E, X,
                             alpha = 0.05,
@@ -65,7 +73,7 @@ ResidualPredictionTest <- function(Y, E, X,
                             resid_type = "OLS",
                             XBasis = NULL,
                             noiseMat = NULL,
-                            getnoiseFct = getNoiseStdNorm,
+                            getnoiseFct = function(n, ...){rnorm(n)},
                             argsGetNoiseFct = NULL,
                             nSim = 100,
                             funcOfRes = function(x){abs(x)},
@@ -75,8 +83,7 @@ ResidualPredictionTest <- function(Y, E, X,
                             ntree = 100,
                             nodesize = 5,
                             maxnodes = NULL,
-                            nSeqTests = 1,
-                            returnModel = FALSE){
+                            nSeqTests = 1){
 
   if(verbose){
     cat("\nFunction of residuals:")
@@ -94,7 +101,7 @@ ResidualPredictionTest <- function(Y, E, X,
   if(is.null(noiseMat)){
     noiseMat <- matrix(nrow=nSim,ncol=n)
     for (sim in 1:nSim){
-      noiseMat[sim,] <- do.call(getnoiseFct, c(list(n, unlist(argsGetNoiseFct), verbose)))
+      noiseMat[sim,] <- do.call(getnoiseFct, c(list(n, unlist(argsGetNoiseFct))))
     }
   }else{
     if(nrow(noiseMat) != nSim){
@@ -179,36 +186,6 @@ ResidualPredictionTest <- function(Y, E, X,
   statsim <- numeric(nSim)
   statsim2 <- numeric(nSim)
 
-
-  # for (sim in 1:nSim){
-  #
-  #   if(NCOL(X) == 1 & all(X == 1)){
-  #     simnoise <- noiseMat[sim,]
-  #     lsim <- lm(simnoise ~ 1)
-  #     res <- residuals(lsim)
-  #     res <- res/sd(res)
-  #   }else{
-  #     res <- RPtestRes$resid_sim[,sim]
-  #   }
-  #
-  #   rf <- randomForest(x = if(useX) data.frame(E, X) else data.frame(E),
-  #                      y = res,
-  #                      ntree = ntree,
-  #                      maxdepth = maxdepth)
-  #   pred <- predict(rf, x = if(useX) data.frame(E, X) else data.frame(E))
-  #   # pred <- rf$predicted
-  #   statsim[sim] <- 1-mean( (pred-res)^2)/mean( (res-mean(res))^2)
-  #
-  #   gRes <- funcOfRes(res)
-  #   rf2 <- randomForest(x = if(useX) data.frame(E, X) else data.frame(E),
-  #                       y = gRes,
-  #                       ntree = ntree,
-  #                       maxdepth = maxdepth)
-  #   pred2 <- predict(rf2, x = if(useX) data.frame(E, X) else data.frame(E))
-  #   # pred <- rf$predicted
-  #   statsim2[sim] <- 1-mean( (pred2-gRes)^2)/mean( (gRes-mean(gRes))^2)
-  # }
-
   inputMat <- if(NCOL(X) == 1 & all(X == 1)) noiseMat else RPtestRes$resid_sim
   ret <- apply(inputMat, 2, function(res){
         if(NCOL(X) == 1 & all(X == 1)){
@@ -221,7 +198,8 @@ ResidualPredictionTest <- function(Y, E, X,
         rf <- randomForest(x = if(useX) data.frame(E, X) else data.frame(E),
                            y = res,
                            ntree = ntree,
-                           maxdepth = maxdepth)
+                           nodesize = nodesize,
+                           maxnodes = maxnodes)
         pred <- predict(rf, x = if(useX) data.frame(E, X) else data.frame(E))
         # pred <- rf$predicted
         statsim1 <- 1-mean( (pred-res)^2)/mean( (res-mean(res))^2)
@@ -230,7 +208,8 @@ ResidualPredictionTest <- function(Y, E, X,
         rf2 <- randomForest(x = if(useX) data.frame(E, X) else data.frame(E),
                             y = gRes,
                             ntree = ntree,
-                            maxdepth = maxdepth)
+                            nodesize = nodesize,
+                            maxnodes = maxnodes)
         pred2 <- predict(rf2, x = if(useX) data.frame(E, X) else data.frame(E))
         # pred <- rf$predicted
         statsim2 <- 1-mean( (pred2-gRes)^2)/mean( (gRes-mean(gRes))^2)
@@ -252,9 +231,3 @@ ResidualPredictionTest <- function(Y, E, X,
        fctBasisExpansion =
          if(exists("fctBasisExpansion")) fctBasisExpansion else NULL)
 }
-
-getNoiseStdNorm <- function(n,args,verbose = FALSE){
-  x <- rnorm(n)
-  return(x)
-}
-

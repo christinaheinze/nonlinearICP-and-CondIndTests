@@ -1,18 +1,17 @@
-#'  test to compare residual distributions
+#' Levene and wilcoxon test to compare first and second moments of residual distributions
 #'
-#' @description Tests whether ...
+#' @description Used as a subroutine in \code{InvariantResidualDistributionTest}
+#' to test whether residual distribution remains invariant across different levels
+#' of E.
 #'
-#' @param Y
-#' @param predicted
-#' @param E
-#' @param n
-#' @param p
-#' @param alpha
-#' @param nSeqTests
-#' @param verbose
+#' @param Y An n-dimensional vector.
+#' @param predicted An n-dimensional vector of predictions for Y.
+#' @param E An n-dimensional vector, defining the grouping.
+#' @param adjFactor Bonferroni adjustment factor for p-value if multiple tests were performed.
+#' @param verbose Set to \code{TRUE} if output should be printed.
 #'
 #' @return A list with the p-value for the test.
-leveneAndWilcoxResidualDistributions <- function(Y, predicted, E, n, p, alpha, nSeqTests, verbose){
+leveneAndWilcoxResidualDistributions <- function(Y, predicted, E, adjFactor, verbose){
   uniqueE <- unique(E)
   numUniqueE <- length(uniqueE)
   residuals <- Y - predicted
@@ -31,7 +30,7 @@ leveneAndWilcoxResidualDistributions <- function(Y, predicted, E, n, p, alpha, n
 
   pvalueWilcoxon <- pvalueWilcoxon*bonfAdjustment
 
-  pvalue <- nSeqTests*2*min(pvalueWilcoxon, pvalueLevene)
+  pvalue <- adjFactor*2*min(pvalueWilcoxon, pvalueLevene)
 
   if(verbose)
     cat(paste("\np-value: ", pvalue))
