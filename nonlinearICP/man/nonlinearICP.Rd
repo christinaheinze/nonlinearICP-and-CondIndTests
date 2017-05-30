@@ -4,8 +4,9 @@
 \alias{nonlinearICP}
 \title{Nonlinear Invariant Causal Prediction}
 \usage{
-nonlinearICP(X, Y, environment, condIndTest = gamTargetY,
-  argsCondIndTest = NULL, alpha = 0.05, varPreSelectionFunc = NULL,
+nonlinearICP(X, Y, environment,
+  condIndTest = InvariantResidualDistributionTest, argsCondIndTest = NULL,
+  alpha = 0.05, varPreSelectionFunc = NULL,
   argsVarPreSelectionFunc = NULL, maxSizeSets = ncol(X),
   condIndTestNames = NULL, speedUp = FALSE, subsampleSize = c(0.1, 0.25,
   0.5, 0.75, 1), retrieveDefiningsSets = TRUE, seed = 1,
@@ -63,6 +64,9 @@ should be retrieved. Defaults to \code{TRUE}.}
  some sets will not be tested (namely those where accepting/rejecting
  would not affect the defining sets). Setting \code{stopIfEmpty} to
 \code{FALSE} means that all possible subsets of the predictors are tested.}
+
+\item{testAdditionalSet}{If a particular set should be tested, the corresponding
+indices can be provided via this argument.}
 
 \item{verbose}{Boolean variable to indicate whether messages should be printed.}
 }

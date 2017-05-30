@@ -1,9 +1,9 @@
-#' Function to compute the intersection of sets, given a list with sets of indices.
-#'
-#' @param acceptedSets List containing sets of indices.
-#' @param verbose Boolean variable to indicate whether messages should be printed.
-#'
-#' @return Vector with indices contained in the intersection of the sets.
+# #' Function to compute the intersection of sets, given a list with sets of indices.
+# #'
+# #' @param acceptedSets List containing sets of indices.
+# #' @param verbose Boolean variable to indicate whether messages should be printed.
+# #'
+# #' @return Vector with indices contained in the intersection of the sets.
 computeSetIntersection <- function(acceptedSets, verbose = FALSE){
 
   if(length(acceptedSets) >= 2){

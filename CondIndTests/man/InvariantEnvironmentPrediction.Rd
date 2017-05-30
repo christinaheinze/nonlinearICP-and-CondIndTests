@@ -46,9 +46,6 @@ for predicting Y also includes a random permutation of E.}
 
 \item{returnModel}{If \code{TRUE}, the fitted quantile regression forest model
 will be returned.}
-
-\item{nSeqTests}{Bonferroni adjustment factor if previous tests where performed
-(e.g. with subsamples).}
 }
 \value{
 A list with the following entries:

@@ -22,8 +22,6 @@
 #' Defaults to NULL.
 #' @param permute Random forest parameter: If \code{TRUE}, model that would use X only
 #' for predicting Y also includes a random permutation of E.
-#' @param nSeqTests Bonferroni adjustment factor if previous tests where performed
-#' (e.g. with subsamples).
 #' @param returnModel If \code{TRUE}, the fitted quantile regression forest model
 #' will be returned.
 #'

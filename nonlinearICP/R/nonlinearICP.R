@@ -37,6 +37,8 @@
 #'  some sets will not be tested (namely those where accepting/rejecting
 #'  would not affect the defining sets). Setting \code{stopIfEmpty} to
 #' \code{FALSE} means that all possible subsets of the predictors are tested.
+#' @param testAdditionalSet If a particular set should be tested, the corresponding
+#'  indices can be provided via this argument.
 #' @param verbose Boolean variable to indicate whether messages should be printed.
 #'
 #' @return A list with the following elements:
@@ -51,7 +53,7 @@
 #' \item \code{settings} Settings provided to \code{nonlinearICP}.
 #' }
 nonlinearICP <- function(X, Y, environment,
-                         condIndTest = gamTargetY,
+                         condIndTest = InvariantResidualDistributionTest,
                          argsCondIndTest = NULL,
                          alpha=0.05,
                          varPreSelectionFunc = NULL,

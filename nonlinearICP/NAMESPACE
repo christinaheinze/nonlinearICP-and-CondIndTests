@@ -1,2 +1,4 @@
-import(CondIndTests, data.tree)
+import(CondIndTests, data.tree, randomForest)
+importFrom("caTools", sample.split)
+
 export(nonlinearICP, varSelectionRF)

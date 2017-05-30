@@ -37,7 +37,7 @@ getPValueAndDecision <- function(X, Y, environment,
       pvalue$pvalue <- pvalue$pvalue*length(subsampleSize)
 
       # if larger subsamples are still to be tested, continue
-      if(inherits(pvalueAndDecision, "try-error") & subsampleSize[ss] < 1){
+      if(inherits(pvalue, "try-error") & subsampleSize[ss] < 1){
         if(verbose)
           cat(paste("\nError with subsample of size ", sum(subsampleInd),
                     ". Continue with larger sample size.",
