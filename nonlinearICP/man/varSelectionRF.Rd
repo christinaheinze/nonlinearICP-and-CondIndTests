@@ -8,7 +8,7 @@ on this subset. Here, the variable selection is based on random forest variable
 importance measures.}
 \usage{
 varSelectionRF(X, Y, env, verbose, nSelect = sqrt(ncol(X)),
-  useMtry = sqrt(ncol(X)), ntree = 100, sampsize = min(nrow(X), 500))
+  useMtry = sqrt(ncol(X)), ntree = 100)
 }
 \arguments{
 \item{X}{A (nxp)-dimensional matrix (or data frame) with n observations of p variables.}
@@ -20,13 +20,11 @@ A numeric vector of length n. Has to contain at least two different unique value
 
 \item{verbose}{If \code{FALSE}, most messages are supressed.}
 
-\item{nSelect}{Number of variables to select.}
+\item{nSelect}{Number of variables to select. Defaults to \code{sqrt(ncol(X))}.}
 
-\item{useMtry}{Random forest parameter \code{mtry}.}
+\item{useMtry}{Random forest parameter \code{mtry}. Defaults to \code{sqrt(ncol(X))}.}
 
-\item{ntree}{Random forest parameter \code{ntree}.}
-
-\item{sampsize}{Random forest parameter \code{sampsize}.}
+\item{ntree}{Random forest parameter \code{ntree}. Defaults to 100.}
 }
 \value{
 A vector containing the indices of the selected variables.

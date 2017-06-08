@@ -23,33 +23,34 @@ ResidualPredictionTest(Y, E, X, alpha = 0.05, verbose = FALSE, degree = 4,
 
 \item{verbose}{If \code{TRUE}, intermediate output is provided. Defaults to \code{FALSE}.}
 
-\item{degree}{Degree of polynomial to use if basis = 'polynomial' or basis = 'nystrom_poly'.}
+\item{degree}{Degree of polynomial to use if  \code{basis="polynomial"} or  \code{basis="nystrom_poly"}.
+Defaults to 4.}
 
-\item{basis}{Can be one of "nystrom", "nystrom_poly", "fourier", "polynomial",
-"provided". Defaults to "nystrom".}
+\item{basis}{Can be one of  \code{"nystrom","nystrom_poly","fourier","polynomial","provided"}. Defaults to  \code{"nystrom"}.}
 
-\item{resid_type}{Can be "Lasso" or "OLS". Defaults to "OLS".}
+\item{resid_type}{Can be  \code{"Lasso"} or  \code{"OLS"}. Defaults to  \code{"OLS"}.}
 
-\item{XBasis}{Basis if basis = "provided".}
+\item{XBasis}{Basis if  \code{basis="provided"}. Defaults to \code{NULL}.}
 
 \item{noiseMat}{Matrix with simulated noise. Defaults to NULL in which case the
 simulation is performed inside the function.}
 
-\item{getnoiseFct}{Function to use to generate the noise matrix.}
+\item{getnoiseFct}{Function to use to generate the noise matrix. Defaults to \code{function(n, ...){rnorm(n)}}.}
 
-\item{argsGetNoiseFct}{Arguments for \code{getnoiseFct}.}
+\item{argsGetNoiseFct}{Arguments for \code{getnoiseFct}. Defaults to \code{NULL}.}
 
-\item{nSim}{Number of simulations to use.}
+\item{nSim}{Number of simulations to use. Defaults to 100.}
 
 \item{funcOfRes}{Function of residuals to use in addition to predicting the
-conditional mean.}
+conditional mean. Defaults to \code{function(x){abs(x)}}.}
 
 \item{useX}{Set to \code{TRUE} if the predictors in X should also be used when
-predicting the scaled residuals with E.}
+predicting the scaled residuals with E. Defaults to \code{TRUE}.}
 
-\item{returnXBasis}{Set to \code{TRUE} if basis expansion should be returned.}
+\item{returnXBasis}{Set to \code{TRUE} if basis expansion should be returned. Defaults to \code{FALSE}.}
 
-\item{nSub}{Number of random features to use if basis = "nystrom", "nystrom_poly" or "fourier".}
+\item{nSub}{Number of random features to use if  \code{basis} is one of  \code{"nystrom","nystrom_poly"} or  \code{"fourier"}.
+Defaults to \code{ceiling(NROW(X)/4)}.}
 
 \item{ntree}{Random forest parameter: Number of trees to grow. Defaults to 500.}
 
@@ -61,9 +62,9 @@ Defaults to NULL.}
 \value{
 A list with the following entries:
 \itemize{
- \item \code{pValue} The p value for the null hypothesis that Y and E are independent given X.
+ \item \code{pvalue} The p-value for the null hypothesis that Y and E are independent given X.
  \item \code{XBasis} Basis expansion if \code{returnXBasis} was set to \code{TRUE}.
- \item \code{fctBasisExpansion} Function used to create basis expansion if basis is not "provided".
+ \item \code{fctBasisExpansion} Function used to create basis expansion if basis is not  \code{"provided"}.
  }
 }
 \description{

@@ -14,10 +14,19 @@ condIndTest(Y, E, X, method = "KCI", alpha = 0.05, parsMethod = list(),
 
 \item{X}{An n-dimensional vector or a matrix or dataframe with n rows and p columns.}
 
-\item{verbose}{}
+\item{method}{The conditional indepdence test to use, can be one of
+\code{"KCI"}, \code{"InvariantConditionalQuantilePrediction"}, \code{"InvariantEnvironmentPrediction"},
+ \code{"InvariantResidualDistributionTest"}, \code{"InvariantTargetPrediction"}, \code{"ResidualPredictionTest"}.}
+
+\item{alpha}{Significance level. Defaults to 0.05.}
+
+\item{parsMethod}{Named list to pass options to \code{method}.}
+
+\item{verbose}{If \code{TRUE}, intermediate output is provided. Defaults to \code{FALSE}.}
 }
 \value{
-
+A list with the p-value of the test (\code{pvalue}) and possibly additional
+entries, depending on the output of the chosen conditional independence test in \code{method}.
 }
 \description{
 Tests the null hypothesis that Y and E are independent given X.

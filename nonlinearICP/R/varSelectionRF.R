@@ -8,21 +8,18 @@
 #' @param env Indicator of the experiment or the intervention type an observation belongs to.
 #' A numeric vector of length n. Has to contain at least two different unique values.
 #' @param verbose If \code{FALSE}, most messages are supressed.
-#' @param nSelect Number of variables to select.
-#' @param useMtry Random forest parameter \code{mtry}.
-#' @param ntree Random forest parameter \code{ntree}.
-#' @param sampsize Random forest parameter \code{sampsize}.
+#' @param nSelect Number of variables to select. Defaults to \code{sqrt(ncol(X))}.
+#' @param useMtry Random forest parameter \code{mtry}. Defaults to \code{sqrt(ncol(X))}.
+#' @param ntree Random forest parameter \code{ntree}. Defaults to 100.
 #'
 #' @return A vector containing the indices of the selected variables.
 varSelectionRF <- function(X, Y, env, verbose,
                            nSelect = sqrt(ncol(X)),
                            useMtry = sqrt(ncol(X)),
-                           ntree = 100,
-                           sampsize = min(nrow(X), 500)
-                           ){
+                           ntree = 100){
   p <- ncol(X)
-  rfResultOnlyX <- randomForest(x = X, y = Y, mtry = useMtry,
-                                ntree = ntree, sampsize = sampsize)
+  rfResultOnlyX <- randomForest(x = X, y = Y, mtry = useMtry, ntree = ntree)
+
   if(nSelect < p){
     idxSelect <- order(rfResultOnlyX$importance, decreasing = TRUE)[1:nSelect]
 

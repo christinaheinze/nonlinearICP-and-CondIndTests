@@ -14,18 +14,19 @@
 #' @param lambda
 #' @param thresh
 #' @param numEig
-#' @param verbose
+#' @param verbose If \code{TRUE}, intermediate output is provided. Defaults to \code{FALSE}.
 #'
 #' @return A list with the following entries:
 #' \itemize{
 #'  \item \code{testStatistic} the statistic Tr(K_{(ddot{(X)}|Z)} * K_{(Y|Z)})
 #'  \item \code{criticalValue} the critical point at the p-value equal to alpha;
 #'   obtained by bootstrapping if \code{bootstrap = TRUE}, otherwise obtained by Gamma approximation..
-#'  \item \code{pvalue} The p value for the null hypothesis that Y and E are independent given X.
-#'  It is obtained by bootstrapping if \code{bootstrap = TRUE}, otherwise obtained by Gamma approximation..
+#'  \item \code{pvalue} The p-value for the null hypothesis that Y and E are independent given X.
+#'  It is obtained by bootstrapping if \code{bootstrap = TRUE}, otherwise obtained by Gamma approximation.
 #'  }
 #'
 #' @examples
+#' # Example 1
 #' n <- 100
 #' E <- rnorm(n)
 #' X <- 4 + 2 * E + rnorm(n)

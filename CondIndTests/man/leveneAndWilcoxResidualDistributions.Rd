@@ -11,7 +11,7 @@ leveneAndWilcoxResidualDistributions(Y, predicted, E, verbose)
 
 \item{predicted}{An n-dimensional vector of predictions for Y.}
 
-\item{E}{An n-dimensional vector, defining the grouping.}
+\item{E}{An n-dimensional vector. \code{E} needs to be a factor.}
 
 \item{verbose}{Set to \code{TRUE} if output should be printed.}
 }

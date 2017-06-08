@@ -7,22 +7,23 @@
 #' @param X A matrix or dataframe with n rows and p columns.
 #' @param alpha Significance level. Defaults to 0.05.
 #' @param verbose If \code{TRUE}, intermediate output is provided. Defaults to \code{FALSE}.
-#' @param degree Degree of polynomial to use if basis = 'polynomial' or basis = 'nystrom_poly'.
-#' @param basis Can be one of "nystrom", "nystrom_poly", "fourier", "polynomial",
-#' "provided". Defaults to "nystrom".
-#' @param resid_type Can be "Lasso" or "OLS". Defaults to "OLS".
-#' @param XBasis Basis if basis = "provided".
+#' @param degree Degree of polynomial to use if  \code{basis="polynomial"} or  \code{basis="nystrom_poly"}.
+#' Defaults to 4.
+#' @param basis Can be one of  \code{"nystrom","nystrom_poly","fourier","polynomial","provided"}. Defaults to  \code{"nystrom"}.
+#' @param resid_type Can be  \code{"Lasso"} or  \code{"OLS"}. Defaults to  \code{"OLS"}.
+#' @param XBasis Basis if  \code{basis="provided"}. Defaults to \code{NULL}.
 #' @param noiseMat Matrix with simulated noise. Defaults to NULL in which case the
 #' simulation is performed inside the function.
-#' @param getnoiseFct Function to use to generate the noise matrix.
-#' @param argsGetNoiseFct Arguments for \code{getnoiseFct}.
-#' @param nSim Number of simulations to use.
+#' @param getnoiseFct Function to use to generate the noise matrix. Defaults to \code{function(n, ...){rnorm(n)}}.
+#' @param argsGetNoiseFct Arguments for \code{getnoiseFct}. Defaults to \code{NULL}.
+#' @param nSim Number of simulations to use. Defaults to 100.
 #' @param funcOfRes Function of residuals to use in addition to predicting the
-#' conditional mean.
+#' conditional mean. Defaults to \code{function(x){abs(x)}}.
 #' @param useX Set to \code{TRUE} if the predictors in X should also be used when
-#' predicting the scaled residuals with E.
-#' @param returnXBasis Set to \code{TRUE} if basis expansion should be returned.
-#' @param nSub Number of random features to use if basis = "nystrom", "nystrom_poly" or "fourier".
+#' predicting the scaled residuals with E. Defaults to \code{TRUE}.
+#' @param returnXBasis Set to \code{TRUE} if basis expansion should be returned. Defaults to \code{FALSE}.
+#' @param nSub Number of random features to use if  \code{basis} is one of  \code{"nystrom","nystrom_poly"} or  \code{"fourier"}.
+#' Defaults to \code{ceiling(NROW(X)/4)}.
 #' @param ntree Random forest parameter: Number of trees to grow. Defaults to 500.
 #' @param nodesize Random forest parameter: Minimum size of terminal nodes. Defaults to 5.
 #' @param maxnodes Random forest parameter: Maximum number of terminal nodes trees in the forest can have.
@@ -30,9 +31,9 @@
 #'
 #' @return A list with the following entries:
 #' \itemize{
-#'  \item \code{pValue} The p value for the null hypothesis that Y and E are independent given X.
+#'  \item \code{pvalue} The p-value for the null hypothesis that Y and E are independent given X.
 #'  \item \code{XBasis} Basis expansion if \code{returnXBasis} was set to \code{TRUE}.
-#'  \item \code{fctBasisExpansion} Function used to create basis expansion if basis is not "provided".
+#'  \item \code{fctBasisExpansion} Function used to create basis expansion if basis is not  \code{"provided"}.
 #'  }
 #'
 #' @examples

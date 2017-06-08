@@ -23,6 +23,6 @@ A list with the p-value for the test.
 }
 \description{
 Used as a subroutine in \code{InvariantTargetPrediction} to test
-whether out-of-sample performance is better when using X and E as predictors for Y,
+whether out-of-sample prediction performance is better when using X and E as predictors for Y,
 compared to using X only.
 }

@@ -2,11 +2,12 @@
 #'
 #' @param X A (nxp)-dimensional matrix (or data frame) with n observations of p variables.
 #' @param Y A (nx1)-dimensional response vector.
-#' @param environment Environment variable(s), containing in a (n x k)-dimensional
+#' @param environment Environment variable(s) in an (n x k)-dimensional
 #' matrix or dataframe. Note that not all nonlinear conditional
 #' independence tests may support more than one environmental variable.
 #' @param condIndTest Function implementing a conditional independence test (TODO:
-#' specify interface). Defaults to \code{gamTargetY}.
+#' specify interface). Defaults to \code{InvariantResidualDistributionTest} from
+#' the package \code{CondIndTests}.
 #' @param argsCondIndTest Arguments of \code{condIndTest}. Defaults to \code{NULL}.
 #' @param alpha Significance level to be used. Defaults to \code{0.05}.
 #' @param varPreSelectionFunc Variable selection function that is applied
@@ -17,8 +18,8 @@
 #' Defaults to \code{NULL}.
 #' @param maxSizeSets Maximal size of sets considered as causal parents.
 #' Defaults to \code{ncol(X)}.
-#' @param condIndTestNames Name of conditional independence test. Used for printing and
-#' data prep in case of \code{scaledResiduals}. Defaults to \code{NULL}.
+#' @param condIndTestNames Name of conditional independence test, used for printing.
+#'  Defaults to \code{NULL}.
 #' @param speedUp Use subsamples of sizes specified in \code{subsampleSize} to speed
 #' up the test for sets where the null hypothesis can already be rejected based on
 #' a small number of samples (a larger sample size would potentially further
@@ -52,6 +53,22 @@
 #' \item \code{pvalues.rejected} P-values of rejected sets.
 #' \item \code{settings} Settings provided to \code{nonlinearICP}.
 #' }
+#'
+#' @examples
+#' require(CondIndTests)
+#' data("simData")
+#' targetVar <- 2
+#' # choose environments where we did not intervene on var
+#' useEnvs <- which(simData$interventionVar[,targetVar] == 0)
+#' ind <- is.element(simData$environment, useEnvs)
+#' X <- simData$X[ind,-targetVar]
+#' Y <- simData$X[ind,targetVar]
+#' E <- as.factor(simData$environment[ind])
+#' result <- nonlinearICP(X = X, Y = Y, environment = E)
+#' cat(paste("Variable",result$retrievedCausalVars, "was retrieved as the causal
+#' parent of target variable", targetVar, "."))
+#'
+#'
 nonlinearICP <- function(X, Y, environment,
                          condIndTest = InvariantResidualDistributionTest,
                          argsCondIndTest = NULL,
@@ -94,7 +111,6 @@ nonlinearICP <- function(X, Y, environment,
                           deparse(substitute(condIndTest))
                         },
 
-
                         "' with test '",
 
                         if(class(argsCondIndTest$test) == "function"){
@@ -128,12 +144,15 @@ nonlinearICP <- function(X, Y, environment,
         cat(paste("\n Maximal set size is", maxSizeSets))
 
     testsets <- getblanketall(idxSelected, maxSize = maxSizeSets)
+  }else if(!is.null(varPreSelectionFunc)){
+    warning("varPreSelectionFunc needs to be a function. Ignoring the argument.")
   }else{
     testsets <- getblanketall(1:p, maxSize = maxSizeSets)
   }
 
   # number of sets to test
   nSets <- length(testsets)
+
   # initialize list for accepted sets
   acceptedSets <- rejectedSets <- list()
   acceptedModels <- list()

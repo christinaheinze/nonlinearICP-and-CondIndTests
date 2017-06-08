@@ -2,14 +2,16 @@ Package: nonlinearICP2
 Type: Package
 Title: Invariant Causal Prediction for Nonlinear Models
 Version: 0.1
-Date: 2017-06-01
-Author: Christina Heinze-Deml <heinzedeml@stat.math.ethz.ch>
+Date: 2017-06-09
+Author: Christina Heinze-Deml <heinzedeml@stat.math.ethz.ch>, Jonas Peters <jonas.peters@math.ku.dk>
 Depends:
     R (>= 3.1.0)
 Maintainer: Christina Heinze-Deml <heinzedeml@stat.math.ethz.ch>
-Description: Code for 'nonlinear Invariant Causal Prediction', a group of algorithms
-    to estimate the causal parents of a given target variable from data collected in
-    different experimental or environmental conditions. For more details, see <add link>.
+Description: Code for 'nonlinear Invariant Causal Prediction' to estimate the 
+    causal parents of a given target variable from data collected in
+    different experimental or environmental conditions, extending
+    'Invariant Causal Prediction' from Peters, Buehlmann and Meinshausen (2016)
+    to nonlinear settings. For more details, see <add link>.
 License: GPL
 LazyData: TRUE
 Imports:

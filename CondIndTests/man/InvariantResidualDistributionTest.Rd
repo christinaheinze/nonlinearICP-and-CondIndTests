@@ -6,13 +6,13 @@
 \usage{
 InvariantResidualDistributionTest(Y, E, X, alpha = 0.05, verbose = FALSE,
   fitWithGam = TRUE, test = leveneAndWilcoxResidualDistributions,
-  colNameNoSmooth = NULL, mtry = sqrt(NCOL(X)), ntree = 500,
+  colNameNoSmooth = NULL, mtry = sqrt(NCOL(X)), ntree = 100,
   nodesize = 5, maxnodes = NULL, returnModel = FALSE)
 }
 \arguments{
 \item{Y}{An n-dimensional vector.}
 
-\item{E}{An n-dimensional factor variable.}
+\item{E}{An n-dimensional vector. E needs to be a factor.}
 
 \item{X}{A matrix or dataframe with n rows and p columns.}
 
@@ -21,30 +21,31 @@ InvariantResidualDistributionTest(Y, E, X, alpha = 0.05, verbose = FALSE,
 \item{verbose}{If \code{TRUE}, intermediate output is provided. Defaults to \code{FALSE}.}
 
 \item{fitWithGam}{If \code{TRUE}, a GAM is used for the nonlinear regression, else
-a random forest is used.}
+a random forest is used. Defaults to \code{TRUE}.}
 
 \item{test}{Unconditional independence test that tests whether residual distribution is
 invariant across different levels of E. Defaults to \code{leveneAndWilcoxResidDistributions}.}
 
-\item{colNameNoSmooth}{Gam parameter: Name of variables that should enter linearly into the model.}
+\item{colNameNoSmooth}{Gam parameter: Name of variables that should enter linearly into the model.
+Defaults to \code{NULL}.}
 
 \item{mtry}{Random forest parameter: Number of variables randomly sampled as
-candidates at each split. Defaults to sqrt(NCOL(X)).}
+candidates at each split. Defaults to \code{sqrt(NCOL(X))}.}
 
-\item{ntree}{Random forest parameter: Number of trees to grow. Defaults to 500.}
+\item{ntree}{Random forest parameter: Number of trees to grow. Defaults to 100.}
 
 \item{nodesize}{Random forest parameter: Minimum size of terminal nodes. Defaults to 5.}
 
 \item{maxnodes}{Random forest parameter: Maximum number of terminal nodes trees in the forest can have.
-Defaults to NULL.}
+Defaults to \code{NULL}.}
 
 \item{returnModel}{If \code{TRUE}, the fitted quantile regression forest model
-will be returned.}
+will be returned. Defaults to \code{FALSE}.}
 }
 \value{
 A list with the following entries:
 \itemize{
- \item \code{pValue} The p value for the null hypothesis that Y and E are independent given X.
+ \item \code{pvalue} The p-value for the null hypothesis that Y and E are independent given X.
  \item \code{model} The fitted model if \code{returnModel = TRUE}.
  }
 }

@@ -6,7 +6,7 @@
 #'
 #' @param Y An n-dimensional vector.
 #' @param predicted An n-dimensional vector of predictions for Y.
-#' @param E An n-dimensional vector, defining the grouping.
+#' @param E An n-dimensional vector. \code{E} needs to be a factor.
 #' @param verbose Set to \code{TRUE} if output should be printed.
 #'
 #' @return A list with the p-value for the test.

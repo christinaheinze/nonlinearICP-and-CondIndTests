@@ -13,7 +13,7 @@ fishersTestExceedance(Y, predicted, E, verbose)
 \item{predicted}{A matrix with n rows. The columns contain predictions for different
 conditional quantiles of Y|X.}
 
-\item{E}{An n-dimensional vector, defining the grouping.}
+\item{E}{An n-dimensional vector. \code{E} needs to be a factor.}
 
 \item{verbose}{Set to \code{TRUE} if output should be printed.}
 }

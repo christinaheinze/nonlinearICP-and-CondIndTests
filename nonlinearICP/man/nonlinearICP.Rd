@@ -17,12 +17,13 @@ nonlinearICP(X, Y, environment,
 
 \item{Y}{A (nx1)-dimensional response vector.}
 
-\item{environment}{Environment variable(s), containing in a (n x k)-dimensional
+\item{environment}{Environment variable(s) in an (n x k)-dimensional
 matrix or dataframe. Note that not all nonlinear conditional
 independence tests may support more than one environmental variable.}
 
 \item{condIndTest}{Function implementing a conditional independence test (TODO:
-specify interface). Defaults to \code{gamTargetY}.}
+specify interface). Defaults to \code{InvariantResidualDistributionTest} from
+the package \code{CondIndTests}.}
 
 \item{argsCondIndTest}{Arguments of \code{condIndTest}. Defaults to \code{NULL}.}
 
@@ -39,8 +40,8 @@ Defaults to \code{NULL}.}
 \item{maxSizeSets}{Maximal size of sets considered as causal parents.
 Defaults to \code{ncol(X)}.}
 
-\item{condIndTestNames}{Name of conditional independence test. Used for printing and
-data prep in case of \code{scaledResiduals}. Defaults to \code{NULL}.}
+\item{condIndTestNames}{Name of conditional independence test, used for printing.
+Defaults to \code{NULL}.}
 
 \item{speedUp}{Use subsamples of sizes specified in \code{subsampleSize} to speed
 up the test for sets where the null hypothesis can already be rejected based on
@@ -85,4 +86,20 @@ A list with the following elements:
 }
 \description{
 Nonlinear Invariant Causal Prediction
+}
+\examples{
+require(CondIndTests)
+data("simData")
+targetVar <- 2
+# choose environments where we did not intervene on var
+useEnvs <- which(simData$interventionVar[,targetVar] == 0)
+ind <- is.element(simData$environment, useEnvs)
+X <- simData$X[ind,-targetVar]
+Y <- simData$X[ind,targetVar]
+E <- as.factor(simData$environment[ind])
+result <- nonlinearICP(X = X, Y = Y, environment = E)
+cat(paste("Variable",result$retrievedCausalVars, "was retrieved as the causal
+parent of target variable", targetVar, "."))
+
+
 }

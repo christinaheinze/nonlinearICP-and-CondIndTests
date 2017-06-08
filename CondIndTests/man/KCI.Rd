@@ -19,7 +19,7 @@ KCI(Y, E, X, width = 0, alpha = 0.05, unbiased = FALSE, approx = TRUE,
 
 \item{alpha}{Significance level.  Defaults to 0.05.}
 
-\item{verbose}{}
+\item{verbose}{If \code{TRUE}, intermediate output is provided. Defaults to \code{FALSE}.}
 }
 \value{
 A list with the following entries:
@@ -27,14 +27,15 @@ A list with the following entries:
  \item \code{testStatistic} the statistic Tr(K_{(ddot{(X)}|Z)} * K_{(Y|Z)})
  \item \code{criticalValue} the critical point at the p-value equal to alpha;
   obtained by bootstrapping if \code{bootstrap = TRUE}, otherwise obtained by Gamma approximation..
- \item \code{pvalue} The p value for the null hypothesis that Y and E are independent given X.
- It is obtained by bootstrapping if \code{bootstrap = TRUE}, otherwise obtained by Gamma approximation..
+ \item \code{pvalue} The p-value for the null hypothesis that Y and E are independent given X.
+ It is obtained by bootstrapping if \code{bootstrap = TRUE}, otherwise obtained by Gamma approximation.
  }
 }
 \description{
 Tests the null hypothesis that Y and E are independent given X.
 }
 \examples{
+# Example 1
 n <- 100
 E <- rnorm(n)
 X <- 4 + 2 * E + rnorm(n)

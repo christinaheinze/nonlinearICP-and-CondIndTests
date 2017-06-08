@@ -8,7 +8,7 @@
 #' @param Y An n-dimensional vector.
 #' @param predicted A matrix with n rows. The columns contain predictions for different
 #' conditional quantiles of Y|X.
-#' @param E An n-dimensional vector, defining the grouping.
+#' @param E An n-dimensional vector. \code{E} needs to be a factor.
 #' @param verbose Set to \code{TRUE} if output should be printed.
 #'
 #' @return A list with the p-value for the test.

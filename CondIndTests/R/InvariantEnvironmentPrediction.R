@@ -8,26 +8,26 @@
 #' @param X A matrix or dataframe with n rows and p columns.
 #' @param alpha Significance level. Defaults to 0.05.
 #' @param verbose If \code{TRUE}, intermediate output is provided. Defaults to \code{FALSE}.
-#' @param trainTestSplitFunc Function to split sample. Defaults to stratified sampling when
-#' E is a factor.
+#' @param trainTestSplitFunc Function to split sample. Defaults to stratified sampling
+#' using \code{caTools::sample.split}, assuming E is a factor.
 #' @param argsTrainTestSplitFunc Arguments for sampling splitting function.
 #' @param test Unconditional independence test that tests whether the out-of-sample
 #' prediction accuracy is the same when using X only vs. X and Y as predictors for E.
 #' Defaults to \code{propTestTargetE}.
 #' @param mtry Random forest parameter: Number of variables randomly sampled as
-#' candidates at each split.
-#' @param ntree Random forest parameter: Number of trees to grow.
-#' @param nodesize Random forest parameter: Minimum size of terminal nodes.
+#' candidates at each split.  Defaults to \code{sqrt(NCOL(X))}.
+#' @param ntree Random forest parameter: Number of trees to grow. Defaults to 100.
+#' @param nodesize Random forest parameter: Minimum size of terminal nodes. Defaults to 5.
 #' @param maxnodes Random forest parameter: Maximum number of terminal nodes trees in the forest can have.
-#' Defaults to NULL.
+#' Defaults to \code{NULL}.
 #' @param permute Random forest parameter: If \code{TRUE}, model that would use X only
-#' for predicting Y also includes a random permutation of E.
+#' for predicting Y also includes a random permutation of E. Defaults to \code{TRUE}.
 #' @param returnModel If \code{TRUE}, the fitted quantile regression forest model
-#' will be returned.
+#' will be returned. Defaults to \code{FALSE}.
 #'
 #' @return A list with the following entries:
 #' \itemize{
-#'  \item \code{pValue} The p value for the null hypothesis that Y and E are independent given X.
+#'  \item \code{pvalue} The p-value for the null hypothesis that Y and E are independent given X.
 #'  \item \code{model} The fitted models if \code{returnModel = TRUE}.
 #'  }
 #'
@@ -56,11 +56,11 @@ InvariantEnvironmentPrediction <- function(Y, E, X,
                                            alpha = 0.05,
                                            verbose = FALSE,
                                            trainTestSplitFunc = caTools::sample.split,
-                                           argsTrainTestSplitFunc = list(SplitRatio = 0.8),
+                                           argsTrainTestSplitFunc = list(Y = E, SplitRatio = 0.8),
                                            test = propTestTargetE,
                                            mtry = sqrt(NCOL(X)),
                                            ntree = 100,
-                                           nodesize = 50,
+                                           nodesize = 5,
                                            maxnodes = NULL,
                                            permute = TRUE,
                                            returnModel = FALSE){
@@ -72,7 +72,7 @@ InvariantEnvironmentPrediction <- function(Y, E, X,
   n <- NROW(X)
   p <- NCOL(X)
 
-  trainInd <- do.call(trainTestSplitFunc, c(list(E), argsTrainTestSplitFunc))
+  trainInd <- do.call(trainTestSplitFunc, argsTrainTestSplitFunc)
   testInd <- which(!trainInd)
   trainInd <- which(trainInd)
 

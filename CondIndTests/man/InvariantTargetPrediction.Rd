@@ -6,9 +6,10 @@
 \usage{
 InvariantTargetPrediction(Y, E, X, alpha = 0.05, verbose = FALSE,
   fitWithGam = TRUE, trainTestSplitFunc = caTools::sample.split,
-  argsTrainTestSplitFunc = list(SplitRatio = 0.8), test = fTestTargetY,
-  colNameNoSmooth = NULL, mtry = sqrt(NCOL(X)), ntree = 250,
-  nodesize = 5, maxnodes = NULL, permute = TRUE, returnModel = FALSE)
+  argsTrainTestSplitFunc = list(Y = E, SplitRatio = 0.8),
+  test = fTestTargetY, colNameNoSmooth = NULL, mtry = sqrt(NCOL(X)),
+  ntree = 100, nodesize = 5, maxnodes = NULL, permute = TRUE,
+  returnModel = FALSE)
 }
 \arguments{
 \item{Y}{An n-dimensional vector.}
@@ -22,38 +23,40 @@ InvariantTargetPrediction(Y, E, X, alpha = 0.05, verbose = FALSE,
 \item{verbose}{If \code{TRUE}, intermediate output is provided. Defaults to \code{FALSE}.}
 
 \item{fitWithGam}{If \code{TRUE}, a GAM is used for the nonlinear regression, else
-a random forest is used.}
+a random forest is used. Defaults to \code{TRUE}.}
 
-\item{trainTestSplitFunc}{Function to split sample. Defaults to stratified sampling when
-E is a factor,}
+\item{trainTestSplitFunc}{Function to split sample. Defaults to stratified sampling
+using \code{caTools::sample.split}, assuming E is a factor.}
 
 \item{argsTrainTestSplitFunc}{Arguments for sampling splitting function.}
 
 \item{test}{Unconditional independence test that tests whether the out-of-sample
-prediction accuracy is the same when using X only vs. X and E as predictors for Y.}
+prediction accuracy is the same when using X only vs. X and E as predictors for Y.
+Defaults to \code{fTestTargetY}.}
 
-\item{colNameNoSmooth}{Gam parameter: Name of variables that should enter linearly into the model.}
+\item{colNameNoSmooth}{Gam parameter: Name of variables that should enter linearly into the model.
+Defaults to \code{NULL}.}
 
 \item{mtry}{Random forest parameter: Number of variables randomly sampled as
-candidates at each split.}
+candidates at each split. Defaults to \code{sqrt(NCOL(X))}.}
 
-\item{ntree}{Random forest parameter: Number of trees to grow.}
+\item{ntree}{Random forest parameter: Number of trees to grow. Defaults to 100.}
 
-\item{nodesize}{Random forest parameter: Minimum size of terminal nodes.}
+\item{nodesize}{Random forest parameter: Minimum size of terminal nodes. Defaults to 5.}
 
 \item{maxnodes}{Random forest parameter: Maximum number of terminal nodes trees in the forest can have.
 Defaults to NULL.}
 
 \item{permute}{Random forest parameter: If \code{TRUE}, model that would use X only
-for predicting Y also includes a random permutation of E.}
+for predicting Y also includes a random permutation of E. Defaults to \code{TRUE}.}
 
 \item{returnModel}{If \code{TRUE}, the fitted quantile regression forest model
-will be returned.}
+will be returned. Defaults to \code{FALSE}.}
 }
 \value{
 A list with the following entries:
 \itemize{
- \item \code{pValue} The p value for the null hypothesis that Y and E are independent given X.
+ \item \code{pvalue} The p-value for the null hypothesis that Y and E are independent given X.
  \item \code{model} The fitted models if \code{returnModel = TRUE}.
  }
 }

@@ -5,11 +5,15 @@
 #' @param Y An n-dimensional vector or a matrix or dataframe with n rows and p columns.
 #' @param E An n-dimensional vector or a matrix or dataframe with n rows and p columns.
 #' @param X An n-dimensional vector or a matrix or dataframe with n rows and p columns.
-#' @param method
-#' @param alpha
-#' @param verbose
+#' @param method The conditional indepdence test to use, can be one of
+#' \code{"KCI"}, \code{"InvariantConditionalQuantilePrediction"}, \code{"InvariantEnvironmentPrediction"},
+#'  \code{"InvariantResidualDistributionTest"}, \code{"InvariantTargetPrediction"}, \code{"ResidualPredictionTest"}.
+#' @param alpha Significance level. Defaults to 0.05.
+#' @param parsMethod Named list to pass options to \code{method}.
+#' @param verbose If \code{TRUE}, intermediate output is provided. Defaults to \code{FALSE}.
 #'
-#' @return
+#' @return A list with the p-value of the test (\code{pvalue}) and possibly additional
+#' entries, depending on the output of the chosen conditional independence test in \code{method}.
 #'
 #' @examples
 #'
@@ -70,7 +74,5 @@ condIndTest <- function(Y, E, X,
          }
   )
 
-  # result should be a list containing , e.g.
-  # list(testStatistic = statistic, criticalValue = critVal, pvalue = pVal)
   return(result)
 }
