@@ -1,12 +1,13 @@
 # ToDo's
 
-* test!! :-) 
+* test!! :-) J: DONE
 
 ## CondIndTests
 
-* KCI documentation DONE
-* improve (printed) output/ write print methods?
-* improve explanation of functions
+* KCI documentation J: DONE
+* improve (printed) output/ write print methods? J: die summary sachen braucht man m.e. nicht. ist doch gut so, oder nicht? 
+* improve explanation of functions J: ?
 
 ## nonlinearICP
-* improve (printed) output/ write print and summary methods?
+* improve (printed) output/ write print and summary methods? J: DONE
+

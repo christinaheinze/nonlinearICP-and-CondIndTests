@@ -54,7 +54,12 @@
 #' \item \code{settings} Settings provided to \code{nonlinearICP}.
 #' }
 #'
+#' @references Please cite
+#' C. Heinze-Deml and J. Peters and N. Meinshausen: "Invariant Causal Prediction for 
+#' Nonlinear Models", arXiv ??????????????????????
+#' 
 #' @examples
+#' # Example 1
 #' require(CondIndTests)
 #' data("simData")
 #' targetVar <- 2
@@ -66,9 +71,16 @@
 #' E <- as.factor(simData$environment[ind])
 #' result <- nonlinearICP(X = X, Y = Y, environment = E)
 #' cat(paste("Variable",result$retrievedCausalVars, "was retrieved as the causal
-#' parent of target variable", targetVar, "."))
-#'
-#'
+#' parent of target variable", targetVar))
+#' ###################################################
+#' # Example 2
+#' E <- rep(c(1,2), each = 500)
+#' X1 <- E + 0.1*rnorm(1000)
+#' X1 <- rnorm(1000)
+#' X2 <- X1 + E^2 + 0.1*rnorm(1000)
+#' Y <- X1 + X2 + 0.1*rnorm(1000)
+#' resultnonlinICP <- nonlinearICP(cbind(X1,X2), Y, as.factor(E))
+#' summary(resultnonlinICP)
 nonlinearICP <- function(X, Y, environment,
                          condIndTest = InvariantResidualDistributionTest,
                          argsCondIndTest = NULL,
@@ -396,7 +408,8 @@ nonlinearICP <- function(X, Y, environment,
                    testAdditionalSet = testAdditionalSet,
                    seed = seed)
 
-  list(retrievedCausalVars = finalSet,
+  
+  nonlinICP.result <- list(retrievedCausalVars = finalSet,
        acceptedSets = acceptedSets,
        definingSets = definingSets,
        acceptedModels = acceptedModels,
@@ -404,6 +417,10 @@ nonlinearICP <- function(X, Y, environment,
        rejectedSets = rejectedSets,
        pvalues.rejected = pvalues.rejected,
        settings = settings)
+  
+  class(nonlinICP.result) <- "nonlinICP.class"
+  
+  return(nonlinICP.result)
 }
 
 

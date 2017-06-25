@@ -21,15 +21,18 @@ KCI(Y, E, X, width = 0, alpha = 0.05, unbiased = FALSE,
 
 \item{unbiased}{A boolean variable that indicates whether a bias correction should be applied (default: FALSE).}
 
-\item{gammaApprox}{A boolean variable that indicates whether the null distribution is approximated by a Gamma distribution. If it is FALSE, a Monte Carlo approach is used (default: TRUE).}
+\item{gammaApprox}{A boolean variable that indicates whether the null distribution is approximated by a Gamma 
+distribution. If it is FALSE, a Monte Carlo approach is used (default: TRUE).}
 
 \item{nRepBs}{Number of draws for the Monte Carlo approach (default: 500).}
 
 \item{lambda}{Regularization parameter (default: 1e-03).}
 
-\item{thresh}{Threshold for eigenvalues. Whenever eigenvalues are computed, they are set to zero if they are smaller than thresh times the maximum eigenvalue (default: 1e-05).}
+\item{thresh}{Threshold for eigenvalues. Whenever eigenvalues are computed, they are set to zero if they are 
+smaller than thresh times the maximum eigenvalue (default: 1e-05).}
 
-\item{numEig}{Number of eigenvalues computed (only relevant for computing the distribution under the hypothesis of conditional independence) (default: length(Y)).}
+\item{numEig}{Number of eigenvalues computed (only relevant for computing the distribution under the hypothesis 
+of conditional independence) (default: length(Y)).}
 
 \item{verbose}{If \code{TRUE}, intermediate output is provided. (default: \code{FALSE}).}
 }
@@ -44,7 +47,10 @@ A list with the following entries:
  }
 }
 \description{
-Tests the null hypothesis that Y and E are independent given X. The distribution of the test statistic under the null hypothesis equals an infinite weighted sum of chi squared variables. This distribution can either be approximated by a gamma distribution or by a Monte Carlo approach.
+Tests the null hypothesis that Y and E are independent given X. The distribution of the test 
+statistic under the null hypothesis equals an infinite weighted sum of chi squared variables. This distribution 
+can either be approximated by a gamma distribution or by a Monte Carlo approach. Choosing the hyperparameters 
+by Gaussian Process regression is not yet implemented.
 }
 \examples{
 # Example 1

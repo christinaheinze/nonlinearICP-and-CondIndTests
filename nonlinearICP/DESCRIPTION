@@ -1,4 +1,4 @@
-Package: nonlinearICP2
+Package: nonlinearICP
 Type: Package
 Title: Invariant Causal Prediction for Nonlinear Models
 Version: 0.1

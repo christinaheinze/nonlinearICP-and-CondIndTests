@@ -1,4 +1,5 @@
 import(CondIndTests, data.tree, randomForest)
 importFrom("caTools", sample.split)
 
+S3method(summary,nonlinICP.class)
 export(nonlinearICP, varSelectionRF)

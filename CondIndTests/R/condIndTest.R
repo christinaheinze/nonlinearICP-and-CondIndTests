@@ -15,6 +15,11 @@
 #' @return A list with the p-value of the test (\code{pvalue}) and possibly additional
 #' entries, depending on the output of the chosen conditional independence test in \code{method}.
 #'
+#' @references Please cite
+#' C. Heinze-Deml and J. Peters and N. Meinshausen: "Invariant Causal Prediction for 
+#' Nonlinear Models", arXiv ?????????????????????? 
+#' and the corresponding reference for the conditional independence test.
+#'
 #' @examples
 #'
 #' # Example 1

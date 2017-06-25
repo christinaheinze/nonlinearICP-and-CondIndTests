@@ -1,4 +1,4 @@
 library(testthat)
-library(nonlinearICP2)
+library(nonlinearICP)
 
-test_check("nonlinearICP2")
+test_check("nonlinearICP")

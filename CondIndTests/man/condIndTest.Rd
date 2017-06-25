@@ -55,3 +55,9 @@ ind. given Z.")
 cat(paste("The p-value of the test is: ", test2$pvalue))
 
 }
+\references{
+Please cite
+C. Heinze-Deml and J. Peters and N. Meinshausen: "Invariant Causal Prediction for 
+Nonlinear Models", arXiv ?????????????????????? 
+and the corresponding reference for the conditional independence test.
+}

@@ -1,4 +1,4 @@
-library(nonlinearICP2)
+library(nonlinearICP)
 context("All supported methods")
 
 data("simData")
