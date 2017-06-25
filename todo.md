@@ -4,7 +4,7 @@
 
 ## CondIndTests
 
-* KCI documentation
+* KCI documentation DONE
 * improve (printed) output/ write print methods?
 * improve explanation of functions
 

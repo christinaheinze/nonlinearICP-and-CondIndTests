@@ -8,12 +8,13 @@ Depends:
     R (>= 3.1.0)
 Maintainer: Christina Heinze-Deml <heinzedeml@stat.math.ethz.ch>
 Description: Code for a variety of nonlinear conditional independence tests: 
-  Kernel conditional independence test (Zhang et al., 2011),
-  Residual Prediction test (based on Shah und Buehlmann, 2015),
+  Kernel conditional independence test (Zhang et al., UAI 2011),
+  Residual Prediction test (based on Shah und Buehlmann, arXiv 2015),
   Invariant environment prediction,
   Invariant target prediction,
   Invariant residual distribution test,
-  Invariant conditional quantile prediction (all from <add ref>).
+  Invariant conditional quantile prediction (all from Heinze-Deml et al., arXiv 2017).
+  If you are using this package, please cite <add ref>.
 License: GPL
 LazyData: TRUE
 Imports:

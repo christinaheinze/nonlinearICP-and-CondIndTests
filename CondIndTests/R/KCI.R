@@ -1,28 +1,33 @@
 #' Kernel conditional independence test.
 #'
-#' @description Tests the null hypothesis that Y and E are independent given X.
+#' @description Tests the null hypothesis that Y and E are independent given X. The distribution of the test 
+#' statistic under the null hypothesis equals an infinite weighted sum of chi squared variables. This distribution 
+#' can either be approximated by a gamma distribution or by a Monte Carlo approach. Choosing the hyperparameters 
+#' by Gaussian Process regression is not yet implemented.
 #'
 #' @param Y A vector of length n or a matrix or dataframe with n rows and p columns.
 #' @param E A vector of length n or a matrix or dataframe with n rows and p columns.
 #' @param X A matrix or dataframe with n rows and p columns.
-#' @param width Kernel width
-#' @param alpha Significance level.  Defaults to 0.05.
-#' @param unbiased
-#' @param approx
-#' @param bootstrap
-#' @param nRepBs
-#' @param lambda
-#' @param thresh
-#' @param numEig
-#' @param verbose If \code{TRUE}, intermediate output is provided. Defaults to \code{FALSE}.
+#' @param width Kernel width; if it is set to zero, the width is chosen automatically (default: 0).
+#' @param alpha Significance level (default: 0.05).
+#' @param unbiased A boolean variable that indicates whether a bias correction should be applied (default: FALSE). 
+#' @param gammaApprox A boolean variable that indicates whether the null distribution is approximated by a Gamma 
+#' distribution. If it is FALSE, a Monte Carlo approach is used (default: TRUE).
+#' @param nRepBs Number of draws for the Monte Carlo approach (default: 500). 
+#' @param lambda Regularization parameter (default: 1e-03).
+#' @param thresh Threshold for eigenvalues. Whenever eigenvalues are computed, they are set to zero if they are 
+#' smaller than thresh times the maximum eigenvalue (default: 1e-05).
+#' @param numEig Number of eigenvalues computed (only relevant for computing the distribution under the hypothesis 
+#' of conditional independence) (default: length(Y)).
+#' @param verbose If \code{TRUE}, intermediate output is provided. (default: \code{FALSE}).
 #'
 #' @return A list with the following entries:
 #' \itemize{
 #'  \item \code{testStatistic} the statistic Tr(K_{(ddot{(X)}|Z)} * K_{(Y|Z)})
 #'  \item \code{criticalValue} the critical point at the p-value equal to alpha;
-#'   obtained by bootstrapping if \code{bootstrap = TRUE}, otherwise obtained by Gamma approximation..
+#'   obtained by a Monte Carlo approach if \code{gammaApprox = FALSE}, otherwise obtained by Gamma approximation.
 #'  \item \code{pvalue} The p-value for the null hypothesis that Y and E are independent given X.
-#'  It is obtained by bootstrapping if \code{bootstrap = TRUE}, otherwise obtained by Gamma approximation.
+#'  It is obtained by a Monte Carlo approach if \code{gammaApprox = FALSE}, otherwise obtained by Gamma approximation.
 #'  }
 #'
 #' @examples
@@ -38,8 +43,7 @@ KCI <- function(Y, E, X,
                 width = 0,
                 alpha = 0.05,
                 unbiased = FALSE,
-                approx = TRUE,
-                bootstrap = TRUE,
+                gammaApprox = TRUE,
                 nRepBs = 500,
                 lambda = 1E-3,
                 thresh = 1E-5,
@@ -175,7 +179,7 @@ KCI <- function(Y, E, X,
     # uuProd <- t(uu) %*% uu
     uuProd <- crossprod(uu)
   }
-  if(bootstrap){
+  if(!gammaApprox){ #if bootstrap
     eigUU <- eigen(uuProd, only.values = TRUE)$values
     keepN <- min(n,sizeU)
     eigUU <- eigUU[1:keepN]
@@ -186,7 +190,7 @@ KCI <- function(Y, E, X,
   critVal <- NULL
   pVal <- NULL
 
-  if(bootstrap){
+  if(!gammaApprox){ #if bootstrap
     if(length(eigUU) * n < 1E6){
       fRand1 <- matrix(rchisq(n = length(eigUU) * nRepBs, df = 1),
                        nrow = length(eigUU), ncol = nRepBs)
@@ -217,7 +221,7 @@ KCI <- function(Y, E, X,
     sortNullDistr <- sort(nullDistr)
     critVal <- sortNullDistr[ceiling((1-alpha)*nRepBs)]
     pVal <- sum(nullDistr > statistic)/nRepBs
-  }else if(approx){
+  }else if(gammaApprox){
 
     meanApprox <- sum(diag(uuProd))
     varApprox <- 2*sum(diag(uuProd^2))
@@ -232,7 +236,8 @@ KCI <- function(Y, E, X,
                            scale = kernPrecisionApprox,
                            lower.tail = TRUE)
   }else{
-    stop("Either 'approx' or 'bootstrap' needs to be set to TRUE.")
+    stop("This will never happen.")
+    #stop("Either 'gammaApprox' or 'bootstrap' needs to be set to TRUE.")
   }
 
   list(testStatistic = statistic, criticalValue = critVal, pvalue = pVal)
