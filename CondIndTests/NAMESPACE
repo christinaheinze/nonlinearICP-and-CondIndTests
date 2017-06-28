@@ -8,7 +8,7 @@ importFrom("stats", "as.formula", "dist", "fisher.test", "ks.test",
              "qgamma", "rchisq", "residuals", "rnorm", "sd",
              "wilcox.test", "xtabs", "runif")
 
-export(condIndTest)
+export(CondIndTest)
 export(KCI)
 export(InvariantConditionalQuantilePrediction, fishersTestExceedance)
 export(InvariantResidualDistributionTest, leveneAndWilcoxResidualDistributions, ksResidualDistributions)

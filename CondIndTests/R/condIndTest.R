@@ -16,8 +16,8 @@
 #' entries, depending on the output of the chosen conditional independence test in \code{method}.
 #'
 #' @references Please cite
-#' C. Heinze-Deml and J. Peters and N. Meinshausen: "Invariant Causal Prediction for 
-#' Nonlinear Models", arXiv ?????????????????????? 
+#' C. Heinze-Deml, J. Peters and N. Meinshausen: "Invariant Causal Prediction for Nonlinear Models",
+#' \href{https://arxiv.org/abs/1706.08576}{arXiv:1706.08576}
 #' and the corresponding reference for the conditional independence test.
 #'
 #' @examples
@@ -28,7 +28,7 @@
 #' Z <- rnorm(n)
 #' X <- 4 + 2 * Z + rnorm(n)
 #' Y <- 3 * X^2 + Z + rnorm(n)
-#' test1 <- condIndTest(X,Y,Z, method = "KCI")
+#' test1 <- CondIndTest(X,Y,Z, method = "KCI")
 #' cat("These data come from a distribution, for which X and Y are NOT
 #' cond. ind. given Z.")
 #' cat(paste("The p-value of the test is: ", test1$pvalue))
@@ -38,12 +38,12 @@
 #' Z <- rnorm(n)
 #' X <- 4 + 2 * Z + rnorm(n)
 #' Y <- 3 + Z + rnorm(n)
-#' test2 <- condIndTest(X,Y,Z, method = "KCI")
+#' test2 <- CondIndTest(X,Y,Z, method = "KCI")
 #' cat("The data come from a distribution, for which X and Y are cond.
 #' ind. given Z.")
 #' cat(paste("The p-value of the test is: ", test2$pvalue))
 #'
-condIndTest <- function(Y, E, X,
+CondIndTest <- function(Y, E, X,
                           method = "KCI",
                           alpha = 0.05,
                           parsMethod = list(),

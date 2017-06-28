@@ -101,7 +101,9 @@ E <- as.factor(simData$environment[ind])
 result <- nonlinearICP(X = X, Y = Y, environment = E)
 cat(paste("Variable",result$retrievedCausalVars, "was retrieved as the causal
 parent of target variable", targetVar))
+
 ###################################################
+
 # Example 2
 E <- rep(c(1,2), each = 500)
 X1 <- E + 0.1*rnorm(1000)
@@ -113,6 +115,6 @@ summary(resultnonlinICP)
 }
 \references{
 Please cite
-C. Heinze-Deml and J. Peters and N. Meinshausen: "Invariant Causal Prediction for 
-Nonlinear Models", arXiv ??????????????????????
+C. Heinze-Deml, J. Peters and N. Meinshausen: "Invariant Causal Prediction for Nonlinear Models",
+\href{https://arxiv.org/abs/1706.08576}{arXiv:1706.08576}.
 }
