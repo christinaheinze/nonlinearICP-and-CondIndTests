@@ -9,13 +9,13 @@ Depends:
 Maintainer: Christina Heinze-Deml <heinzedeml@stat.math.ethz.ch>
 Description: Code for a variety of nonlinear conditional independence tests: 
   Kernel conditional independence test (Zhang et al., UAI 2011),
-  Residual Prediction test (based on Shah und Buehlmann, arXiv 2015),
+  Residual Prediction test (based on Shah and Buehlmann, arXiv 2015),
   Invariant environment prediction,
   Invariant target prediction,
   Invariant residual distribution test,
-  Invariant conditional quantile prediction (all from Heinze-Deml et al., <https://arxiv.org/abs/1706.08576>).
+  Invariant conditional quantile prediction (all from Heinze-Deml et al., <arXiv:1706.08576>).
   If you are using this package, please cite C. Heinze-Deml, J. Peters and 
-    N. Meinshausen: 'Invariant Causal Prediction for Nonlinear Models', arXiv:1706.08576.
+    N. Meinshausen: 'Invariant Causal Prediction for Nonlinear Models', <arXiv:1706.08576>.
 License: GPL
 LazyData: TRUE
 Imports:
@@ -28,4 +28,6 @@ Imports:
     mgcv,
     MASS,
     kernlab
+URL: https://github.com/christinaheinze/nonlinearICP-and-CondIndTests
+BugReports: https://github.com/christinaheinze/nonlinearICP-and-CondIndTests/issues
 RoxygenNote: 6.0.1

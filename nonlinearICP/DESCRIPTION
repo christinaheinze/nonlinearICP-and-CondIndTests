@@ -13,7 +13,7 @@ Description: Code for 'nonlinear Invariant Causal Prediction' to estimate the
     'Invariant Causal Prediction' from Peters, Buehlmann and Meinshausen (2016)
     to nonlinear settings. For more details, see C. Heinze-Deml, J. Peters and 
     N. Meinshausen: 'Invariant Causal Prediction for Nonlinear Models', 
-    <https://arxiv.org/abs/1706.08576>.
+    <arXiv:1706.08576>.
 License: GPL
 LazyData: TRUE
 Imports:
@@ -24,5 +24,7 @@ Imports:
     randomForest
 Suggests:
     testthat
+URL: https://github.com/christinaheinze/nonlinearICP-and-CondIndTests
+BugReports: https://github.com/christinaheinze/nonlinearICP-and-CondIndTests/issues
 RoxygenNote: 6.0.1
 
