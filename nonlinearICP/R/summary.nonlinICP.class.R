@@ -5,7 +5,7 @@
 ##'
 ##' @author Christina Heinze-Deml and Jonas Peters
 ##'
-summary.nonlinICP.class <- function(object, ...){
+summary.nonlinICP.class <- function(object){
   stopifnot(inherits(object, "nonlinICP.class"))
   numSets <- length(object$acceptedSets)
   if(numSets > 0){

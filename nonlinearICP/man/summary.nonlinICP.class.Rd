@@ -4,7 +4,7 @@
 \alias{summary.nonlinICP.class}
 \title{summary function}
 \usage{
-\method{summary}{nonlinICP.class}(object, show.past = TRUE, ...)
+\method{summary}{nonlinICP.class}(object)
 }
 \arguments{
 \item{object}{object of class 'nonlinICP.class'.}
