@@ -4,10 +4,12 @@
 \alias{summary.nonlinICP.class}
 \title{summary function}
 \usage{
-\method{summary}{nonlinICP.class}(object)
+\method{summary}{nonlinICP.class}(object, ...)
 }
 \arguments{
 \item{object}{object of class 'nonlinICP.class'.}
+
+\item{...}{Additional inputs to generic summary function (not used).}
 }
 \description{
 Summary functions for 'nonlinICP.class' objects.

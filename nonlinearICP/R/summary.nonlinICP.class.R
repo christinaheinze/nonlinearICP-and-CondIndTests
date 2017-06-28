@@ -2,10 +2,10 @@
 ##'
 ##' @title summary function
 ##' @param object object of class 'nonlinICP.class'.
-##'
+##' @param ... Additional inputs to generic summary function (not used).
 ##' @author Christina Heinze-Deml and Jonas Peters
 ##'
-summary.nonlinICP.class <- function(object){
+summary.nonlinICP.class <- function(object, ...){
   stopifnot(inherits(object, "nonlinICP.class"))
   numSets <- length(object$acceptedSets)
   if(numSets > 0){
