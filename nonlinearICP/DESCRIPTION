@@ -17,6 +17,7 @@ Description: Code for 'nonlinear Invariant Causal Prediction' to estimate the
 License: GPL
 LazyData: TRUE
 Imports:
+    methods,
     CondIndTests,
     data.tree,
     caTools,
