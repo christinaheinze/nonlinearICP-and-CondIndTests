@@ -1,0 +1,18 @@
+citHeader("To cite CondIndTests in publications please use:")
+
+citEntry(entry = "Article",
+  title        = "Invariant Causal Prediction for Nonlinear Models",
+  author       = personList(as.person("Christina Heinze-Deml"),
+                   as.person("Jonas Peters"), as.person("Nicolai Meinshausen")),
+  journal = "ArXiv e-prints",
+  archivePrefix = "arXiv",
+  eprint = "1706.08576",
+  primaryClass = "stat.ME",
+  year = "2017",
+  month = "jun",
+
+  textVersion  =
+  paste("C. Heinze-Deml, J. Peters and N. Meinshausen (2017).",
+        "Invariant Causal Prediction for Nonlinear Models.",
+        "<arXiv:1706.08576>")
+)

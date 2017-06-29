@@ -1,21 +1,19 @@
 Package: CondIndTests
 Type: Package
 Title: Nonlinear Conditional Independence Tests
-Version: 0.1
-Date: 2017-06-28
+Version: 0.1.1
+Date: 2017-06-29
 Author: Christina Heinze-Deml <heinzedeml@stat.math.ethz.ch>, Jonas Peters <jonas.peters@math.ku.dk>
 Depends:
     R (>= 3.1.0)
 Maintainer: Christina Heinze-Deml <heinzedeml@stat.math.ethz.ch>
 Description: Code for a variety of nonlinear conditional independence tests: 
-  Kernel conditional independence test (Zhang et al., UAI 2011),
-  Residual Prediction test (based on Shah and Buehlmann, arXiv 2015),
+  Kernel conditional independence test (Zhang et al., UAI 2011, <arXiv:1202.3775>),
+  Residual Prediction test (based on Shah and Buehlmann, <arXiv:1511.03334>),
   Invariant environment prediction,
   Invariant target prediction,
   Invariant residual distribution test,
   Invariant conditional quantile prediction (all from Heinze-Deml et al., <arXiv:1706.08576>).
-  If you are using this package, please cite C. Heinze-Deml, J. Peters and 
-    N. Meinshausen: 'Invariant Causal Prediction for Nonlinear Models', <arXiv:1706.08576>.
 License: GPL
 LazyData: TRUE
 Imports:
