@@ -424,5 +424,3 @@ nonlinearICP <- function(X, Y, environment,
 
   return(nonlinICP.result)
 }
-
-

@@ -30,7 +30,6 @@ getPValueAndDecision <- function(X, Y, environment,
                                               X[subsampleInd,, drop = FALSE],
                                               alpha,
                                               verbose
-                                              # nSeqTests = length(subsampleSize)
                                               ),
                                          argsCondIndTest)),
                                silent = if(subsampleSize[ss] < 1) TRUE else FALSE)
