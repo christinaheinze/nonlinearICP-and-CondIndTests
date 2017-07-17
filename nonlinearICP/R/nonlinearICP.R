@@ -5,8 +5,8 @@
 #' @param environment Environment variable(s) in an (n x k)-dimensional
 #' matrix or dataframe. Note that not all nonlinear conditional
 #' independence tests may support more than one environmental variable.
-#' @param condIndTest Function implementing a conditional independence test (TODO:
-#' specify interface). Defaults to \code{InvariantResidualDistributionTest} from
+#' @param condIndTest Function implementing a conditional independence test (see below
+#' for the required interface). Defaults to \code{InvariantResidualDistributionTest} from
 #' the package \code{CondIndTests}.
 #' @param argsCondIndTest Arguments of \code{condIndTest}. Defaults to \code{NULL}.
 #' @param alpha Significance level to be used. Defaults to \code{0.05}.
@@ -54,9 +54,17 @@
 #' \item \code{settings} Settings provided to \code{nonlinearICP}.
 #' }
 #'
+#' @details The function provided as \code{condIndTest} needs to take the following
+#' arguments in the given order: \code{Y, environment, X, alpha, verbose}. Additional
+#' arguments can then be provided via \code{argsCondIndTest}.
+#'
 #' @references Please cite
 #' C. Heinze-Deml, J. Peters and N. Meinshausen: "Invariant Causal Prediction for Nonlinear Models",
 #' \href{https://arxiv.org/abs/1706.08576}{arXiv:1706.08576}.
+#'
+#' @seealso The function \code{\link[CondIndTests]{CondIndTest}} from the package
+#'  \code{CondIndTests} is a wrapper for a variety of nonlinear conditional independence
+#'  tests that can be used in \code{condIndTest}.
 #'
 #' @examples
 #' # Example 1

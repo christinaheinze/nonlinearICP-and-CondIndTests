@@ -21,8 +21,8 @@ nonlinearICP(X, Y, environment,
 matrix or dataframe. Note that not all nonlinear conditional
 independence tests may support more than one environmental variable.}
 
-\item{condIndTest}{Function implementing a conditional independence test (TODO:
-specify interface). Defaults to \code{InvariantResidualDistributionTest} from
+\item{condIndTest}{Function implementing a conditional independence test (see below
+for the required interface). Defaults to \code{InvariantResidualDistributionTest} from
 the package \code{CondIndTests}.}
 
 \item{argsCondIndTest}{Arguments of \code{condIndTest}. Defaults to \code{NULL}.}
@@ -87,6 +87,11 @@ A list with the following elements:
 \description{
 Nonlinear Invariant Causal Prediction
 }
+\details{
+The function provided as \code{condIndTest} needs to take the following
+arguments in the given order: \code{Y, environment, X, alpha, verbose}. Additional
+arguments can then be provided via \code{argsCondIndTest}.
+}
 \examples{
 # Example 1
 require(CondIndTests)
@@ -117,4 +122,9 @@ summary(resultnonlinICP)
 Please cite
 C. Heinze-Deml, J. Peters and N. Meinshausen: "Invariant Causal Prediction for Nonlinear Models",
 \href{https://arxiv.org/abs/1706.08576}{arXiv:1706.08576}.
+}
+\seealso{
+The function \code{\link[CondIndTests]{CondIndTest}} from the package
+ \code{CondIndTests} is a wrapper for a variety of nonlinear conditional independence
+ tests that can be used in \code{condIndTest}.
 }
