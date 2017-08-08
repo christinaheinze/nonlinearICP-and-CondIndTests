@@ -13,10 +13,25 @@
 #' @param ntree Random forest parameter \code{ntree}. Defaults to 100.
 #'
 #' @return A vector containing the indices of the selected variables.
+#'
+#' @examples
+#' # Example 1
+#' require(CondIndTests)
+#' data("simData")
+#' targetVar <- 2
+#' # choose environments where we did not intervene on var
+#' useEnvs <- which(simData$interventionVar[,targetVar] == 0)
+#' ind <- is.element(simData$environment, useEnvs)
+#' X <- simData$X[ind,-targetVar]
+#' Y <- simData$X[ind,targetVar]
+#' E <- as.factor(simData$environment[ind])
+#' chosenIdx <- varSelectionRF(X = X, Y = Y, env = E, verbose = TRUE)
+#' cat(paste("Variable(s)", paste(chosenIdx, collapse=", "), "was/were chosen."))
 varSelectionRF <- function(X, Y, env, verbose,
                            nSelect = sqrt(ncol(X)),
                            useMtry = sqrt(ncol(X)),
                            ntree = 100){
+  nSelect <- round(nSelect,0)
   p <- ncol(X)
   rfResultOnlyX <- randomForest(x = X, y = Y, mtry = useMtry, ntree = ntree)
 

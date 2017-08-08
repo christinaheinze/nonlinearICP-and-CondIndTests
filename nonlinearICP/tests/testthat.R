@@ -1,4 +1,5 @@
-library(testthat)
-library(nonlinearICP)
+if(require(testthat)){
+  library(nonlinearICP)
 
-test_check("nonlinearICP")
+  test_check("nonlinearICP")
+}

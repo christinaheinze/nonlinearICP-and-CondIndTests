@@ -14,6 +14,11 @@ Code for a variety of nonlinear conditional independence tests:
  
 ### Installation
 
+#### From CRAN
+```r
+install.packages("CondIndTests")
+```
+
 #### From Github with `devtools`
 ```r
 devtools::install_github("christinaheinze/nonlinearICP-and-CondIndTests/CondIndTests")
@@ -30,6 +35,11 @@ Code for 'nonlinear Invariant Causal Prediction' to estimate the
     <arXiv:1706.08576>.
  
 ### Installation
+
+#### From CRAN
+```r
+install.packages("nonlinearICP")
+```
 
 #### From Github with `devtools`
 ```r
