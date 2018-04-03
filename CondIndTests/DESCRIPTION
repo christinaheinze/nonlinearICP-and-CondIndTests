@@ -1,8 +1,8 @@
 Package: CondIndTests
 Type: Package
 Title: Nonlinear Conditional Independence Tests
-Version: 0.1.1
-Date: 2017-06-29
+Version: 0.1.2.1
+Date: 2018-03-21
 Author: Christina Heinze-Deml <heinzedeml@stat.math.ethz.ch>, Jonas Peters <jonas.peters@math.ku.dk>
 Depends:
     R (>= 3.1.0)

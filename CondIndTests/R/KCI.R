@@ -47,15 +47,18 @@ KCI <- function(Y, E, X,
                 nRepBs = 500,
                 lambda = 1E-3,
                 thresh = 1E-5,
-                numEig = length(Y),
+                numEig = if(is.data.frame(Y) | is.matrix(Y)) nrow(Y) else if(is.vector(Y)) length(Y),
                 verbose = FALSE){
 
-  if(!is.factor(E) & length(unique(E)) < 5){
-    warning("E has less than 5 unique values; are you sure that E is not a factor?")
+  if(!is.factor(E)){
+    uE <- unique(E)
+    nruE <- if(is.data.frame(E) | is.matrix(E)) nrow(uE) else if(is.vector(E)) length(uE)
+    if(nruE < 5)
+      warning("E has less than 5 unique values; are you sure that E is not a factor?")
   }
 
   # sample size
-  n <- length(Y) # what if Y is a matrix?
+  n <- if(is.data.frame(Y) | is.matrix(Y)) nrow(Y) else if(is.vector(Y)) length(Y)
 
   # normalize the data
   Y <- scale(Y)
@@ -86,7 +89,6 @@ KCI <- function(Y, E, X,
 
   # for centering of the data in feature space
   H <- diag(n) - matrix(1,n,n)/n
-
   # compute kernels for (Y, X)
   KYX <- rbfKernel1(cbind(Y, X/2),c(kernPrecision,1))$kx
   # centralized kernel matrix
