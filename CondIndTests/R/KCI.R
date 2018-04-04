@@ -53,8 +53,9 @@ KCI <- function(Y, E, X,
   if(!is.factor(E)){
     uE <- unique(E)
     nruE <- if(is.data.frame(E) | is.matrix(E)) nrow(uE) else if(is.vector(E)) length(uE)
-    if(nruE < 5)
+    if(nruE < 5){
       warning("E has less than 5 unique values; are you sure that E is not a factor?")
+    }
   }
 
   # sample size
