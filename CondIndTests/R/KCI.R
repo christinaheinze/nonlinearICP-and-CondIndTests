@@ -51,7 +51,8 @@ KCI <- function(Y, E, X,
                 verbose = FALSE){
 
   Y <- check_input_single(Y)
-  if(NCOL(E) == 1){
+  dimE <- NCOL(E)
+  if(dimE == 1){
     E <- check_input_single(E, return_vec = TRUE, check_factor = TRUE)
   }else{
     E <- check_input_single(E, return_vec = FALSE, check_factor = TRUE)
@@ -104,23 +105,20 @@ KCI <- function(Y, E, X,
   # KYX <- H %*% KYX %*% H
   KYX <- crossprod(H, KYX) %*% H
 
-  if(is.factor(E) | all(sapply(E, is.factor))){ #TODO: matrix case
-    # delta kernel for discrete variable E
-    if(is.factor(E)){
-      Enum <- as.numeric(as.character(E))
-    }else if(is.data.frame(E)){
-      Enum <- as.matrix(data.frame(lapply(E, function(i) as.numeric(as.character(i)))))
-    }else if(is.matrix(E)){
-      Enum <- as.matrix(data.frame(apply(E, 2, function(i) as.numeric(as.character(i)))))
-    }
-    # TODO: check correct version if dim(E) > 1
+  
+  
+  if(is.factor(E) & dimE == 1){
+    # delta kernel for categorical variable E
+    Enum <- as.numeric(as.character(E))
     KE <- (Enum^2 == (Enum %*% t(Enum))) %*% diag(n)
-  } else {
+  }else{
+    if(is.data.frame(E) & all(sapply(E, is.factor))){
+      E <- as.matrix(data.frame(lapply(E, function(i) as.numeric(as.character(i)))))
+    }
     E <- scale(E)
     KE <- rbfKernel1(E, c(kernPrecision,1))$kx
-    # centralized kernel matrix
-    # KE <- H %*% KE %*% H
-  }
+  } 
+  # centralized kernel matrix
   KE <- crossprod(H, KE) %*% H
 
   # kernel for conditioning set X

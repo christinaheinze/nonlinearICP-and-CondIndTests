@@ -6,7 +6,7 @@ context("All supported methods")
 verbose <- FALSE
 dat_gens <- c(1, 2)
 methods <- c(
-             # "KCI", 
+             "KCI",
              "InvariantConditionalQuantilePrediction",
              "InvariantEnvironmentPrediction",
              "InvariantResidualDistributionTest",
@@ -117,7 +117,7 @@ for(dat_gen in dat_gens){
     
     for(method in methods){
       
-      if(method == "KCI" & setting %in% c("1", "2", "3", "5", "7") |
+      if(method == "KCI" & setting %in% c("1", "2", "3", "4", "5", "6", "7", "8") |
          method == "InvariantConditionalQuantilePrediction" & setting %in% c("2", "4", "6", "8") |
          method == "InvariantEnvironmentPrediction" & setting %in% c("2", "4", "6", "8")  |
          method == "InvariantResidualDistributionTest" & setting %in% c("2", "4", "6", "8") |
@@ -135,20 +135,16 @@ for(dat_gen in dat_gens){
         )
       }
       
-      if(#method == "KCI" & setting %in% c("1", "2", "3", "5", "7") | 
-         method == "InvariantConditionalQuantilePrediction" & setting %in% c("1", "3", "5", "7") |
+      if(method == "InvariantConditionalQuantilePrediction" & setting %in% c("1", "3", "5", "7") |
          method == "InvariantEnvironmentPrediction" & setting %in% c("1", "3", "5", "7") |
          method == "InvariantResidualDistributionTest" & setting %in% c("1", "3", "5", "7") 
-         # method == "InvariantTargetPrediction" & setting %in% c("1", "2", "3", "4", "5", "6", "7", "8") |
-         # method == "ResidualPredictionTest" & setting %in% c("1", "2", "3", "4", "5", "6", "7", "8")
-      ){
+         ){
         
         test_that(paste("Checks output type for", method, "and setting", setting), {
         cat(paste("\nMethod:", method, "; Setting", setting, "\n"))
           expect_error(
         out <- CondIndTest(X, Y, Z, method = method)
         )
-        # print(out)
         }
         )
       }
