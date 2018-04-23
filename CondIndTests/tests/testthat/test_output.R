@@ -1,4 +1,5 @@
 library(CondIndTests)
+require(testthat)
 context("All supported methods")
 
 ## TODO: add different subroutines

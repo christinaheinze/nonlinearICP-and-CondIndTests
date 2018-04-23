@@ -39,7 +39,9 @@ gamTargetY <- function(X,
     idxNoSmoothE <- idxNoSmooth
   }
   
-  if(is.factor(E) | is.vector(E)){
+  if(is.factor(E)){
+    E <- as.matrix(as.numeric(as.character(E)))
+  }else if(is.vector(E)){
     E <- as.matrix(E)
   }
   
