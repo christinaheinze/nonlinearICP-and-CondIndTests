@@ -110,7 +110,7 @@ KCI <- function(Y, E, X,
   if(is.factor(E) & dimE == 1){
     # delta kernel for categorical variable E
     Enum <- as.numeric(as.character(E))
-    KE <- (Enum^2 == (Enum %*% t(Enum))) %*% diag(n)
+    KE <- sapply(Enum, function(i) i == Enum) %*% diag(n)
   }else{
     if(is.data.frame(E) & all(sapply(E, is.factor))){
       E <- as.matrix(data.frame(lapply(E, function(i) as.numeric(as.character(i)))))
