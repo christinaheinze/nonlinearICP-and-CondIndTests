@@ -64,7 +64,7 @@ InvariantTargetPrediction <-  function(Y, E, X,
                                        verbose = FALSE,
                                        fitWithGam = TRUE,
                                        trainTestSplitFunc = caTools::sample.split,
-                                       argsTrainTestSplitFunc = list(Y = E, SplitRatio = 0.8),
+                                       argsTrainTestSplitFunc = NULL,
                                        test = fTestTargetY,
                                        colNameNoSmooth = NULL,
                                        mtry = sqrt(NCOL(X)),
@@ -74,13 +74,25 @@ InvariantTargetPrediction <-  function(Y, E, X,
                                        permute = TRUE,
                                        returnModel = FALSE
                                        ){
-  if(!is.factor(E)){
-    uE <- unique(E)
-    nruE <- if(is.data.frame(E) | is.matrix(E)) nrow(uE) else if(is.vector(E)) length(uE)
-    if(nruE < 5)
-      warning("E has less than 5 unique values; are you sure that E is not a factor?")
+  # if(!is.factor(E)){
+  #   uE <- unique(E)
+  #   nruE <- if(is.data.frame(E) | is.matrix(E)) nrow(uE) else if(is.vector(E)) length(uE)
+  #   if(nruE < 5)
+  #     warning("E has less than 5 unique values; are you sure that E is not a factor?")
+  # }
+  
+  Y <- check_input_single(Y, return_vec = TRUE)
+  E <- check_input_single(E, check_factor = TRUE)
+  X <- check_input_single(X, return_vec = FALSE)
+  
+  if(is.null(argsTrainTestSplitFunc)){
+    if(is.data.frame(E) | is.matrix(E)){
+      argsTrainTestSplitFunc <- list(Y = E[,1], SplitRatio = 0.8)
+    }else{
+      argsTrainTestSplitFunc <- list(Y = E, SplitRatio = 0.8)
+    }
   }
-
+  
   n <- NROW(X)
   p <- NCOL(X)
 

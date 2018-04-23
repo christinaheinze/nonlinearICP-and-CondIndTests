@@ -6,10 +6,9 @@
 \usage{
 InvariantTargetPrediction(Y, E, X, alpha = 0.05, verbose = FALSE,
   fitWithGam = TRUE, trainTestSplitFunc = caTools::sample.split,
-  argsTrainTestSplitFunc = list(Y = E, SplitRatio = 0.8),
-  test = fTestTargetY, colNameNoSmooth = NULL, mtry = sqrt(NCOL(X)),
-  ntree = 100, nodesize = 5, maxnodes = NULL, permute = TRUE,
-  returnModel = FALSE)
+  argsTrainTestSplitFunc = NULL, test = fTestTargetY,
+  colNameNoSmooth = NULL, mtry = sqrt(NCOL(X)), ntree = 100,
+  nodesize = 5, maxnodes = NULL, permute = TRUE, returnModel = FALSE)
 }
 \arguments{
 \item{Y}{An n-dimensional vector.}

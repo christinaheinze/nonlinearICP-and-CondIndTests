@@ -57,6 +57,11 @@ InvariantResidualDistributionTest <- function(Y, E, X,
                                               maxnodes = NULL,
                                               returnModel = FALSE){
 
+  
+  Y <- check_input_single(Y, return_vec = TRUE, str = "Y")
+  E <- check_input_single(E, check_factor = TRUE, return_vec = TRUE, str = "E")
+  X <- check_input_single(X, return_vec = FALSE)
+  
   if(!is.factor(E)){
     stop("InvariantResidualDistributionTest can only be applied if E is a factor.")
   }

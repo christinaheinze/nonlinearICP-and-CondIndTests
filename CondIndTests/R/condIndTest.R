@@ -60,7 +60,8 @@ CondIndTest <- function(Y, E, X,
   if(method %in% c("KCI", "InvariantEnvironmentPrediction")) dimY <- 1
   # for these tests we need to apply Bonf. correction when dimE > 1
   if(!(method %in% c("InvariantEnvironmentPrediction", 
-                     "InvariantResidualDistributionTest"))) dimE <- 1
+                     "InvariantResidualDistributionTest",
+                     "InvariantConditionalQuantilePrediction"))) dimE <- 1
 
   nTests <- dimY*dimE
   results <- vector("list", nTests)
@@ -72,7 +73,7 @@ CondIndTest <- function(Y, E, X,
   for(de in 1:dimE){
     for(dy in 1:dimY){
       argsSet <- list(Y = if(dimY > 1) Y[, dy] else Y,
-                      E = if(dimE > 1) Y[, de] else E,
+                      E = if(dimE > 1) E[, de] else E,
                       X = X,
                       alpha = alpha,
                       verbose = verbose)
@@ -117,7 +118,7 @@ CondIndTest <- function(Y, E, X,
     }
   }
   
-  results$pvalue_bonf <- min(1, pval_bonf*dimY)
+  results$pvalue_bonf <- min(1, pval_bonf*nTests)
   
   return(results)
 }

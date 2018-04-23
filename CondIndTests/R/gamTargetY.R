@@ -28,14 +28,24 @@ gamTargetY <- function(X,
   predictedOnlyX <- gamOnlyX$predictions
 
   # train model with X and E and predict out-of-sample with XE-model
+  dimE <- NCOL(E)
+  
   if(is.factor(E)){
     idxNoSmoothE <- c(idxNoSmooth, ncol(as.matrix(X))+1)
+  }else if(is.data.frame(E)){
+    smE <- ncol(as.matrix(X))+which(sapply(E, is.factor))
+    idxNoSmoothE <- c(idxNoSmooth, smE)
   }else{
     idxNoSmoothE <- idxNoSmooth
   }
-  gamXE <- getgamPredictions(as.data.frame(cbind(as.matrix(X)[trainInd,], E[trainInd])),
+  
+  if(is.factor(E) | is.vector(E)){
+    E <- as.matrix(E)
+  }
+  
+  gamXE <- getgamPredictions(as.data.frame(cbind(as.matrix(X)[trainInd,], E[trainInd,])),
                   Y[trainInd],
-                  as.data.frame(cbind(as.matrix(X)[testInd,], E[testInd])),
+                  as.data.frame(cbind(as.matrix(X)[testInd,], E[testInd,])),
                   idxNoSmooth = idxNoSmoothE,
                   returnModel = returnModel)
 
