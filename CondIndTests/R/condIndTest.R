@@ -48,36 +48,76 @@ CondIndTest <- function(Y, E, X,
                           alpha = 0.05,
                           parsMethod = list(),
                           verbose = FALSE){
+  # apply test for every dimension in Y
+  # TODO: double check: do we need to do this for every test?
+  # env prediction: do this for E but not for Y
+  # InvariantEnvironmentPrediction
+  # InvariantResidualDistributionTest
+  dimY <- NCOL(Y)
+  dimE <- NCOL(E)
+  
+  # for these tests we do not need to apply Bonf. correction when dimY > 1
+  if(method %in% c("KCI", "InvariantEnvironmentPrediction")) dimY <- 1
+  # for these tests we need to apply Bonf. correction when dimE > 1
+  if(!(method %in% c("InvariantEnvironmentPrediction", 
+                     "InvariantResidualDistributionTest"))) dimE <- 1
 
-  argsSet <- list(Y = Y,
-                  E = E,
-                  X = X,
-                  alpha = alpha,
-                  verbose = verbose)
-
-  switch(method,
-         "KCI" = {
-           result <- do.call(KCI, c(argsSet, parsMethod))
-         },
-         "InvariantConditionalQuantilePrediction" = {
-           result <- do.call(InvariantConditionalQuantilePrediction, c(argsSet, parsMethod))
-         },
-         "InvariantEnvironmentPrediction" = {
-           result <- do.call(InvariantEnvironmentPrediction, c(argsSet, parsMethod))
-         },
-         "InvariantResidualDistributionTest" = {
-           result <- do.call(InvariantResidualDistributionTest, c(argsSet, parsMethod))
-         },
-         "InvariantTargetPrediction" = {
-           result <- do.call(InvariantTargetPrediction, c(argsSet, parsMethod))
-         },
-         "ResidualPredictionTest" = {
-           result <- do.call(ResidualPredictionTest, c(argsSet, parsMethod))
-         },
-         {
-           stop(paste("Method ", method," not implemented"))
-         }
-  )
-
-  return(result)
+  nTests <- dimY*dimE
+  results <- vector("list", nTests)
+  
+  # names(results) <- paste("Y", 1:nTests, sep = "")
+  pval_bonf <- 1
+  
+  k <- 1
+  for(de in 1:dimE){
+    for(dy in 1:dimY){
+      argsSet <- list(Y = if(dimY > 1) Y[, dy] else Y,
+                      E = if(dimE > 1) Y[, de] else E,
+                      X = X,
+                      alpha = alpha,
+                      verbose = verbose)
+      
+      switch(method,
+             "KCI" = {
+               result <- do.call(KCI, c(argsSet, parsMethod))
+             },
+             "InvariantConditionalQuantilePrediction" = {
+               result <- do.call(InvariantConditionalQuantilePrediction, c(argsSet, parsMethod))
+             },
+             "InvariantEnvironmentPrediction" = {
+               result <- do.call(InvariantEnvironmentPrediction, c(argsSet, parsMethod))
+             },
+             "InvariantResidualDistributionTest" = {
+               result <- do.call(InvariantResidualDistributionTest, c(argsSet, parsMethod))
+             },
+             "InvariantTargetPrediction" = {
+               result <- do.call(InvariantTargetPrediction, c(argsSet, parsMethod))
+             },
+             "ResidualPredictionTest" = {
+               result <- do.call(ResidualPredictionTest, c(argsSet, parsMethod))
+             },
+             {
+               stop(paste("Method ", method," not implemented"))
+             }
+      )
+      pval_bonf <- min(pval_bonf, result$pvalue)
+      results[[k]] <- result
+      
+      if(dimY > 1 & dimE > 1) 
+        name <- paste("Y", dy, "E", de, sep = "")
+      else if(dimY > 1)
+        name <- paste("Y", dy, sep = "")
+      else if(dimE > 1)
+        name <- paste("E", de, sep = "")
+      else
+        name <- paste("Y", dy, sep = "")
+      
+      names(results)[[k]] <- name
+      k <- k+1
+    }
+  }
+  
+  results$pvalue_bonf <- min(1, pval_bonf*dimY)
+  
+  return(results)
 }

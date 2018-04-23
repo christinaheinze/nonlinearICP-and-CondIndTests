@@ -29,3 +29,4 @@ Imports:
 URL: https://github.com/christinaheinze/nonlinearICP-and-CondIndTests
 BugReports: https://github.com/christinaheinze/nonlinearICP-and-CondIndTests/issues
 RoxygenNote: 6.0.1
+Suggests: testthat

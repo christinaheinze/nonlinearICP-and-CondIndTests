@@ -50,16 +50,24 @@ KCI <- function(Y, E, X,
                 numEig = if(is.data.frame(Y) | is.matrix(Y)) nrow(Y) else if(is.vector(Y)) length(Y),
                 verbose = FALSE){
 
-  if(!is.factor(E)){
-    uE <- unique(E)
-    nruE <- if(is.data.frame(E) | is.matrix(E)) nrow(uE) else if(is.vector(E)) length(uE)
-    if(nruE < 5){
-      warning("E has less than 5 unique values; are you sure that E is not a factor?")
-    }
+  Y <- check_input_single(Y)
+  if(NCOL(E) == 1){
+    E <- check_input_single(E, return_vec = TRUE, check_factor = TRUE)
+  }else{
+    E <- check_input_single(E, return_vec = FALSE, check_factor = TRUE)
   }
+  X <- check_input_single(X)
+  
+  # if(!is.factor(E)){
+  #   uE <- unique(E)
+  #   nruE <- NROW(uE)
+  #   if(nruE < 5){
+  #     warning("E has less than 5 unique values; are you sure that E is not a factor?")
+  #   }
+  # }
 
   # sample size
-  n <- if(is.data.frame(Y) | is.matrix(Y)) nrow(Y) else if(is.vector(Y)) length(Y)
+  n <- NROW(Y)
 
   # normalize the data
   Y <- scale(Y)
@@ -73,7 +81,7 @@ KCI <- function(Y, E, X,
   rm(XPrime)
 
   # numbers of variables in X
-  d <- ncol(X)
+  d <- NCOL(X)
 
   # kernel width
   if(width == 0){
@@ -96,10 +104,16 @@ KCI <- function(Y, E, X,
   # KYX <- H %*% KYX %*% H
   KYX <- crossprod(H, KYX) %*% H
 
-  if(is.factor(E)){
-    # show(E)
+  if(is.factor(E) | all(sapply(E, is.factor))){ #TODO: matrix case
     # delta kernel for discrete variable E
-    Enum <- as.numeric(E)
+    if(is.factor(E)){
+      Enum <- as.numeric(as.character(E))
+    }else if(is.data.frame(E)){
+      Enum <- as.matrix(data.frame(lapply(E, function(i) as.numeric(as.character(i)))))
+    }else if(is.matrix(E)){
+      Enum <- as.matrix(data.frame(apply(E, 2, function(i) as.numeric(as.character(i)))))
+    }
+    # TODO: check correct version if dim(E) > 1
     KE <- (Enum^2 == (Enum %*% t(Enum))) %*% diag(n)
   } else {
     E <- scale(E)

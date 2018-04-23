@@ -81,6 +81,10 @@ ResidualPredictionTest <- function(Y, E, X,
                             nodesize = 5,
                             maxnodes = NULL){
 
+  Y <- check_input_single(Y, return_vec = TRUE, str = "Y")
+  E <- check_input_single(E, check_factor = TRUE, return_vec = FALSE)
+  X <- check_input_single(X, return_vec = FALSE)
+  
   if(verbose){
     cat("\nFunction of residuals:")
     print(body(funcOfRes))
