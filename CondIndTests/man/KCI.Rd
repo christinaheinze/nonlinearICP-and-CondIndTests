@@ -6,8 +6,7 @@
 \usage{
 KCI(Y, E, X, width = 0, alpha = 0.05, unbiased = FALSE,
   gammaApprox = TRUE, nRepBs = 500, lambda = 0.001, thresh = 1e-05,
-  numEig = if (is.data.frame(Y) | is.matrix(Y)) nrow(Y) else if (is.vector(Y))
-  length(Y), verbose = FALSE)
+  numEig = NROW(Y), verbose = FALSE)
 }
 \arguments{
 \item{Y}{A vector of length n or a matrix or dataframe with n rows and p columns.}

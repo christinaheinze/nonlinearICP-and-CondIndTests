@@ -48,17 +48,15 @@ CondIndTest <- function(Y, E, X,
                           alpha = 0.05,
                           parsMethod = list(),
                           verbose = FALSE){
-  # apply test for every dimension in Y
-  # TODO: double check: do we need to do this for every test?
-  # env prediction: do this for E but not for Y
-  # InvariantEnvironmentPrediction
-  # InvariantResidualDistributionTest
+
+  # if dimY and/or dimE are larger than 1, apply appropriate correction 
+  # according to method
   dimY <- NCOL(Y)
   dimE <- NCOL(E)
   
-  # for these tests we do not need to apply Bonf. correction when dimY > 1
+  # for these tests we do *not need* to apply Bonf. correction when dimY > 1
   if(method %in% c("KCI", "InvariantEnvironmentPrediction")) dimY <- 1
-  # for these tests we need to apply Bonf. correction when dimE > 1
+  # for these tests we *need to* apply Bonf. correction when dimE > 1
   if(!(method %in% c("InvariantEnvironmentPrediction", 
                      "InvariantResidualDistributionTest",
                      "InvariantConditionalQuantilePrediction"))) dimE <- 1

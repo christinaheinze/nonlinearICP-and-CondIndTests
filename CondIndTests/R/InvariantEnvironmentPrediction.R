@@ -64,12 +64,6 @@ InvariantEnvironmentPrediction <- function(Y, E, X,
                                            maxnodes = NULL,
                                            permute = TRUE,
                                            returnModel = FALSE){
-  # if(!is.factor(E)){
-  #   uE <- unique(E)
-  #   nruE <- if(is.data.frame(E) | is.matrix(E)) nrow(uE) else if(is.vector(E)) length(uE)
-  #   if(nruE < 5)
-  #     warning("E has less than 5 unique values; are you sure that E is not a factor?")
-  # }
 
   Y <- check_input_single(Y, return_vec = FALSE)
   E <- check_input_single(E, check_factor = TRUE, return_vec = TRUE, str = "E")

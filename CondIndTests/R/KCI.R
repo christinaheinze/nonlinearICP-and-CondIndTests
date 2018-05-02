@@ -47,7 +47,7 @@ KCI <- function(Y, E, X,
                 nRepBs = 500,
                 lambda = 1E-3,
                 thresh = 1E-5,
-                numEig = if(is.data.frame(Y) | is.matrix(Y)) nrow(Y) else if(is.vector(Y)) length(Y),
+                numEig = NROW(Y),
                 verbose = FALSE){
 
   Y <- check_input_single(Y)
@@ -58,14 +58,6 @@ KCI <- function(Y, E, X,
     E <- check_input_single(E, return_vec = FALSE, check_factor = TRUE)
   }
   X <- check_input_single(X)
-  
-  # if(!is.factor(E)){
-  #   uE <- unique(E)
-  #   nruE <- NROW(uE)
-  #   if(nruE < 5){
-  #     warning("E has less than 5 unique values; are you sure that E is not a factor?")
-  #   }
-  # }
 
   # sample size
   n <- NROW(Y)
@@ -104,12 +96,10 @@ KCI <- function(Y, E, X,
   # centralized kernel matrix
   # KYX <- H %*% KYX %*% H
   KYX <- crossprod(H, KYX) %*% H
-
-  
   
   if(is.factor(E) & dimE == 1){
     # delta kernel for categorical variable E
-    Enum <- as.numeric(as.character(E))
+    Enum <- as.numeric(E)
     KE <- sapply(Enum, function(i) i == Enum) %*% diag(n)
   }else{
     if(is.data.frame(E) & all(sapply(E, is.factor))){
