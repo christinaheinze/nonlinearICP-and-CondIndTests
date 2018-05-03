@@ -101,6 +101,8 @@ CondIndTest <- function(Y, E, X,
       )
       pval_bonf <- min(pval_bonf, result$pvalue)
       results[[k]] <- result
+      names(results[[k]])[which(names(results[[k]]) == "pvalue")] <- "pvalue_individual"
+      
       
       if(dimY > 1 & dimE > 1) 
         name <- paste("Y", dy, "E", de, sep = "")
@@ -116,7 +118,7 @@ CondIndTest <- function(Y, E, X,
     }
   }
   
-  results$pvalue_bonf <- min(1, pval_bonf*nTests)
+  results$pvalue <- min(1, pval_bonf*nTests)
   
   return(results)
 }
