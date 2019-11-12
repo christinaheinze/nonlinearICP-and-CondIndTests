@@ -9,7 +9,7 @@ methods <- c(
              "KCI",
              "InvariantConditionalQuantilePrediction",
              "InvariantEnvironmentPrediction",
-             "InvariantResidualDistributionTest", 
+             "InvariantResidualDistributionTest",
              "InvariantTargetPrediction",
              "ResidualPredictionTest"
              )

@@ -4,8 +4,8 @@
 \alias{CondIndTest}
 \title{Wrapper function for conditional independence tests.}
 \usage{
-CondIndTest(Y, E, X, method = "KCI", alpha = 0.05, parsMethod = list(),
-  verbose = FALSE)
+CondIndTest(Y, E, X, method = "KCI", alpha = 0.05,
+  parsMethod = list(), verbose = FALSE)
 }
 \arguments{
 \item{Y}{An n-dimensional vector or a matrix or dataframe with n rows and p columns.}

@@ -5,8 +5,8 @@
 \title{Kernel conditional independence test.}
 \usage{
 KCI(Y, E, X, width = 0, alpha = 0.05, unbiased = FALSE,
-  gammaApprox = TRUE, nRepBs = 500, lambda = 0.001, thresh = 1e-05,
-  numEig = NROW(Y), verbose = FALSE)
+  gammaApprox = TRUE, GP = TRUE, nRepBs = 5000, lambda = 0.001,
+  thresh = 1e-05, numEig = NROW(Y), verbose = FALSE)
 }
 \arguments{
 \item{Y}{A vector of length n or a matrix or dataframe with n rows and p columns.}
@@ -24,6 +24,8 @@ KCI(Y, E, X, width = 0, alpha = 0.05, unbiased = FALSE,
 \item{gammaApprox}{A boolean variable that indicates whether the null distribution is approximated by a Gamma
 distribution. If it is FALSE, a Monte Carlo approach is used (default: TRUE).}
 
+\item{GP}{Flag whether to use Gaussian Process regression to choose the hyperparameters}
+
 \item{nRepBs}{Number of draws for the Monte Carlo approach (default: 500).}
 
 \item{lambda}{Regularization parameter (default: 1e-03).}
@@ -39,18 +41,19 @@ of conditional independence) (default: length(Y)).}
 \value{
 A list with the following entries:
 \itemize{
- \item \code{testStatistic} the statistic Tr(K_{(ddot{(X)}|Z)} * K_{(Y|Z)})
+ \item \code{testStatistic} the statistic Tr(K_{(ddot{(Y)}|X)} * K_{(E|X)})
  \item \code{criticalValue} the critical point at the p-value equal to alpha;
   obtained by a Monte Carlo approach if \code{gammaApprox = FALSE}, otherwise obtained by Gamma approximation.
  \item \code{pvalue} The p-value for the null hypothesis that Y and E are independent given X.
- It is obtained by a Monte Carlo approach if \code{gammaApprox = FALSE}, otherwise obtained by Gamma approximation.
+ It is obtained by a Monte Carlo approach if \code{gammaApprox = FALSE}, 
+ otherwise obtained by Gamma approximation.
  }
 }
 \description{
 Tests the null hypothesis that Y and E are independent given X. The distribution of the test
 statistic under the null hypothesis equals an infinite weighted sum of chi squared variables. This distribution
-can either be approximated by a gamma distribution or by a Monte Carlo approach. Choosing the hyperparameters
-by Gaussian Process regression is not yet implemented.
+can either be approximated by a gamma distribution or by a Monte Carlo approach. This version includes an
+implementation of choosing the hyperparameters by Gaussian Process regression.
 }
 \examples{
 # Example 1

@@ -1,9 +1,11 @@
 Package: CondIndTests
 Type: Package
 Title: Nonlinear Conditional Independence Tests
-Version: 0.1.4
-Date: 2018-05-07
-Author: Christina Heinze-Deml <heinzedeml@stat.math.ethz.ch>, Jonas Peters <jonas.peters@math.ku.dk>
+Version: 0.1.5
+Date: 2019-11-11
+Author: Christina Heinze-Deml <heinzedeml@stat.math.ethz.ch>, 
+  Jonas Peters <jonas.peters@math.ku.dk>,
+  Asbjoern Marco Sinius Munk <fgp998@alumni.ku.dk>
 Depends:
     R (>= 3.1.0)
 Maintainer: Christina Heinze-Deml <heinzedeml@stat.math.ethz.ch>
@@ -25,8 +27,10 @@ Imports:
     caTools,
     mgcv,
     MASS,
-    kernlab
+    kernlab,
+    pracma, 
+    mize
 URL: https://github.com/christinaheinze/nonlinearICP-and-CondIndTests
 BugReports: https://github.com/christinaheinze/nonlinearICP-and-CondIndTests/issues
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.1
 Suggests: testthat

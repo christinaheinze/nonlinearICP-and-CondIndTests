@@ -33,6 +33,3 @@ rbfKernel1 <- function(x, theta){
 
   list(kx = kx, bwNew = bwNew)
 }
-
-
-

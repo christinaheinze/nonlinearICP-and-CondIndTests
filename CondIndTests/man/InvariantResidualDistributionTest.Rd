@@ -4,10 +4,11 @@
 \alias{InvariantResidualDistributionTest}
 \title{Invariant residual distribution test.}
 \usage{
-InvariantResidualDistributionTest(Y, E, X, alpha = 0.05, verbose = FALSE,
-  fitWithGam = TRUE, test = leveneAndWilcoxResidualDistributions,
-  colNameNoSmooth = NULL, mtry = sqrt(NCOL(X)), ntree = 100,
-  nodesize = 5, maxnodes = NULL, returnModel = FALSE)
+InvariantResidualDistributionTest(Y, E, X, alpha = 0.05,
+  verbose = FALSE, fitWithGam = TRUE,
+  test = leveneAndWilcoxResidualDistributions, colNameNoSmooth = NULL,
+  mtry = sqrt(NCOL(X)), ntree = 100, nodesize = 5, maxnodes = NULL,
+  returnModel = FALSE)
 }
 \arguments{
 \item{Y}{An n-dimensional vector.}

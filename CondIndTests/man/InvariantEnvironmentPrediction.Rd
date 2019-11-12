@@ -8,7 +8,8 @@ InvariantEnvironmentPrediction(Y, E, X, alpha = 0.05, verbose = FALSE,
   trainTestSplitFunc = caTools::sample.split,
   argsTrainTestSplitFunc = list(Y = E, SplitRatio = 0.8),
   test = propTestTargetE, mtry = sqrt(NCOL(X)), ntree = 100,
-  nodesize = 5, maxnodes = NULL, permute = TRUE, returnModel = FALSE)
+  nodesize = 5, maxnodes = NULL, permute = TRUE,
+  returnModel = FALSE)
 }
 \arguments{
 \item{Y}{An n-dimensional vector.}

@@ -4,13 +4,14 @@
 \alias{ResidualPredictionTest}
 \title{Residual prediction test.}
 \usage{
-ResidualPredictionTest(Y, E, X, alpha = 0.05, verbose = FALSE, degree = 4,
-  basis = c("nystrom", "nystrom_poly", "fourier", "polynomial",
-  "provided")[1], resid_type = "OLS", XBasis = NULL, noiseMat = NULL,
-  getnoiseFct = function(n, ...) {     rnorm(n) }, argsGetNoiseFct = NULL,
-  nSim = 100, funcOfRes = function(x) {     abs(x) }, useX = TRUE,
-  returnXBasis = FALSE, nSub = ceiling(NROW(X)/4), ntree = 100,
-  nodesize = 5, maxnodes = NULL)
+ResidualPredictionTest(Y, E, X, alpha = 0.05, verbose = FALSE,
+  degree = 4, basis = c("nystrom", "nystrom_poly", "fourier",
+  "polynomial", "provided")[1], resid_type = "OLS", XBasis = NULL,
+  noiseMat = NULL, getnoiseFct = function(n, ...) {     rnorm(n) },
+  argsGetNoiseFct = NULL, nSim = 100, funcOfRes = function(x) {    
+  abs(x) }, useX = TRUE, returnXBasis = FALSE,
+  nSub = ceiling(NROW(X)/4), ntree = 100, nodesize = 5,
+  maxnodes = NULL)
 }
 \arguments{
 \item{Y}{An n-dimensional vector.}

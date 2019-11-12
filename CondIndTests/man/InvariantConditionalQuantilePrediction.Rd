@@ -5,9 +5,9 @@
 \title{Invariant conditional quantile prediction.}
 \usage{
 InvariantConditionalQuantilePrediction(Y, E, X, alpha = 0.05,
-  verbose = FALSE, test = fishersTestExceedance, mtry = sqrt(NCOL(X)),
-  ntree = 100, nodesize = 5, maxnodes = NULL, quantiles = c(0.1, 0.5,
-  0.9), returnModel = FALSE)
+  verbose = FALSE, test = fishersTestExceedance,
+  mtry = sqrt(NCOL(X)), ntree = 100, nodesize = 5, maxnodes = NULL,
+  quantiles = c(0.1, 0.5, 0.9), returnModel = FALSE)
 }
 \arguments{
 \item{Y}{An n-dimensional vector.}
